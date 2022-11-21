@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">HabitManager</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="splash_fragment_label">Splash Fragment</string>
+    <string name="main_fragment_label">Main Fragment</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="btnEditHabit">Editar Hábito</string>
+    <string name="btnDeleteHabit">Borrar Hábito</string>
+    <string name="HabitName">Introduce el nombre del Hábito</string>
+    <string name="HabitDescription">Añade una corta descripción (Opcional)</string>
+    <string name="DatePicker">Escoge una fecha de inicio</string>
+    <string name="EndDatePicker">Escoge una fecha de finalización</string>
+    <string name="addFAB">Añadir este nuevo hábito</string>
+    <string name="btnViewHabit">btn View Habit</string>
+    <string name="layoutCurrentDaysCount">Días totales : </string>
+    <string name="layoutCompletedDaysCount">Días completados : </string>
+    <string name="backFAB">Volver</string>
+    <string name="action_list">Hábitos</string>
+    <string name="calendarBack"><![CDATA[<-]]></string>
+    <string name="frontBack"><![CDATA[->]]></string>
+    <string name="dayOfWeek">DíaDeLaSemana</string>
+    <string name="monthYear">MesAño</string>
+    <string name="addedHabit">Un nuevo hábito ha sido añadido</string>
+    <string name="deletedHabit">Un hábito ha sido eliminado</string>
+    <string name="editedHabit">Un hábito ha sido editado</string>
+
+    <!-- AboutUs Strings-->
+    <string name="name">Sergio</string>
+    <string name="activity">Estudiante de CFGS DAM</string>
+    <string name="brief"> Furuto Técnico Superior en Desarrollo de Aplicaciones Multiplataforma</string>
+    <string name="gitHub">smorrec/HabitManager</string>
+    <string name="linkedIn">sergio-morales-recio-b23661178</string>
+    <string name="action_AboutUs">About Us</string>
+    <string name="Habit">Hábitos</string>
+</resources>

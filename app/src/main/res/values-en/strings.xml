@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">HabitManager</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="splash_fragment_label">Splash Fragment</string>
+    <string name="main_fragment_label">Main Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="btnEditHabit">Edit Habit</string>
+    <string name="btnDeleteHabit">Delete Habit</string>
+    <string name="HabitName">Introduce the habit name</string>
+    <string name="HabitDescription">Add a short description (Optional)</string>
+    <string name="DatePicker">Set a starting date</string>
+    <string name="EndDatePicker">Set an ending date (Optional)</string>
+    <string name="addFAB">Add new habit</string>
+    <string name="btnViewHabit">btn View Habit</string>
+    <string name="layoutCurrentDaysCount">Total Days : </string>
+    <string name="layoutCompletedDaysCount">Completed Days : </string>
+    <string name="backFAB">Go back</string>
+    <string name="action_list">Habits</string>
+    <string name="calendarBack"><![CDATA[<-]]></string>
+    <string name="frontBack"><![CDATA[->]]></string>
+    <string name="dayOfWeek">DayOfWeek</string>
+    <string name="monthYear">MonthYear</string>
+    <string name="addedHabit">A new habit has been added</string>
+    <string name="deletedHabit">An habit has been deleted</string>
+    <string name="editedHabit">An habit has been edited</string>
+
+    <!-- AboutUs Strings-->
+    <string name="name">Sergio</string>
+    <string name="activity">Studient of CFGS DAM</string>
+    <string name="brief"> Future Advance Technician in Multiplatform App Development</string>
+    <string name="gitHub">smorrec/HabitManager</string>
+    <string name="linkedIn">sergio-morales-recio-b23661178</string>
+    <string name="action_AboutUs">About Us</string>
+</resources>
