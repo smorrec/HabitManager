@@ -1,10 +1,12 @@
-package com.example.habitmanager.ui;
+package com.example.habitmanager.ui.habit;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,12 +20,16 @@ import com.example.habitmanager.R;
 import com.example.habitmanager.adapter.HabitAdapter;
 import com.example.habitmanager.data.model.Habit;
 import com.example.habitmanager.databinding.FragmentHabitListBinding;
+import com.example.habitmanager.viewmodel.StateData;
+
+import java.util.ArrayList;
 
 
 public class HabitListFragment extends Fragment implements HabitAdapter.OnItemClickListener {
     private FragmentHabitListBinding binding;
     private HabitAdapter adapter;
     private int selectedHabit;
+    private HabitViewModel habitViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,7 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
             return false;
         });
         initRvHabit();
+        initViewModel();
     }
 
     private void initRvHabit(){
@@ -72,6 +79,29 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
         binding.rvHabit.setLayoutManager(linearLayoutManager);
 
         binding.rvHabit.setAdapter(adapter);
+    }
+
+    private void initViewModel(){
+        habitViewModel = new ViewModelProvider(this).get(HabitViewModel.class);
+        habitViewModel.getListLiveStateData().observe(getViewLifecycleOwner(), arrayListStateData -> {
+            switch (arrayListStateData.getDataState()){
+                case LOADING:
+                    //Show progressBar
+                    break;
+                case NODATA:
+                    //Mostrar algo
+                    arrayListStateData.completed();
+                    break;
+                case SUCCESS:
+                    adapter.update(arrayListStateData.getData());
+                    arrayListStateData.completed();
+                    break;
+                case COMPLETED:
+                    //Hide progressBar
+                    break;
+            }
+        });
+        habitViewModel.getDataList();
     }
 
     @Override

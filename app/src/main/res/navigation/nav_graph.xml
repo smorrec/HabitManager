@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/habitListFragment"
-        android:name="com.example.habitmanager.ui.HabitListFragment"
+        android:name="com.example.habitmanager.ui.habit.HabitListFragment"
         android:label="fragment_habit_list"
         tools:layout="@layout/fragment_habit_list" >
         <action
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/addHabitFragment"
-        android:name="com.example.habitmanager.ui.AddHabitFragment"
+        android:name="com.example.habitmanager.ui.habit.AddHabitFragment"
         android:label="fragment_add_habit"
         tools:layout="@layout/fragment_add_habit" >
         <action
@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/editHabitFragment"
-        android:name="com.example.habitmanager.ui.EditHabitFragment"
+        android:name="com.example.habitmanager.ui.habit.EditHabitFragment"
         android:label="fragment_edit_habit"
         tools:layout="@layout/fragment_edit_habit" >
         <action
@@ -71,7 +71,7 @@
     </fragment>
     <fragment
         android:id="@+id/habitViewFragment"
-        android:name="com.example.habitmanager.ui.HabitViewFragment"
+        android:name="com.example.habitmanager.ui.habit.HabitViewFragment"
         android:label="HabitViewFragment" >
         <action
             android:id="@+id/action_habitViewFragment_to_habitListFragment"

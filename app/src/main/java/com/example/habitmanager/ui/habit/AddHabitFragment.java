@@ -1,9 +1,7 @@
-package com.example.habitmanager.ui;
+package com.example.habitmanager.ui.habit;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -17,35 +15,31 @@ import com.example.habitmanager.R;
 import com.example.habitmanager.data.HabitRepository;
 import com.example.habitmanager.data.model.Category;
 import com.example.habitmanager.data.model.Habit;
-import com.example.habitmanager.databinding.FragmentEditHabitBinding;
+import com.example.habitmanager.databinding.FragmentAddHabitBinding;
+import com.example.habitmanager.ui.utils.DatePickerFragment;
 
-
-public class EditHabitFragment extends Fragment {
-    private FragmentEditHabitBinding binding;
+public class AddHabitFragment extends Fragment {
+    private HabitRepository repository;
+    private FragmentAddHabitBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = FragmentEditHabitBinding.inflate(inflater);
-        binding.setHabit(getArguments().getParcelable(Habit.KEY));
+        binding = FragmentAddHabitBinding.inflate(inflater);
         binding.txtStartDatePicker.setOnClickListener(view -> showStartDatePickerDialog(view));
         binding.txtEndDatePicker.setOnClickListener(view -> showEndDatePickerDialog(view));
-        binding.fab.setOnClickListener(view -> editHabit());
+
         ArrayAdapter<Category> adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, Category.values());
         binding.CategorySpinner.setAdapter(adapter);
+        binding.fab.setOnClickListener(view -> addHabit());
+        binding.setHabit(new Habit());
+        // Inflate the layout for this fragment
         return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     public void showStartDatePickerDialog(View v) {
@@ -64,9 +58,11 @@ public class EditHabitFragment extends Fragment {
         newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
 
-    private void editHabit(){
+    private void addHabit(){
         binding.getHabit().setCategory((Category)binding.CategorySpinner.getSelectedItem());
-        NavHostFragment.findNavController(this).navigate(R.id.action_editHabitFragment_to_habitListFragment);
-        Toast.makeText(getContext(), R.string.editedHabit, Toast.LENGTH_SHORT).show();
+        repository = HabitRepository.getInstance();
+        repository.getList().add(binding.getHabit());
+        NavHostFragment.findNavController(this).navigate(R.id.action_addHabitFragment_to_habitListFragment);
+        Toast.makeText(getContext(), R.string.addedHabit, Toast.LENGTH_SHORT).show();
     }
 }

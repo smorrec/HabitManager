@@ -1,4 +1,4 @@
-package com.example.habitmanager.ui;
+package com.example.habitmanager.ui.habit;
 
 import android.os.Bundle;
 

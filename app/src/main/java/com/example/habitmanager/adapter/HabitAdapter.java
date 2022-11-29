@@ -20,7 +20,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
     public int selectedPosition = -1;
 
     public HabitAdapter(OnItemClickListener listener) {
-        this.list = HabitRepository.getInstance().getList();
+        this.list = new ArrayList<>();
         this.listener = listener;
     }
 
@@ -81,6 +81,12 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
             notifyItemChanged(lastSelected);
 
         }
+    }
+
+    public void update(ArrayList<Habit> data){
+        list.clear();
+        list.addAll(data);
+        notifyDataSetChanged();
     }
 
     public interface OnItemClickListener extends View.OnLongClickListener {
