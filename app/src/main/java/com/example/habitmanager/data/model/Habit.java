@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Habit implements Parcelable {
     public static final String KEY = "habit";
@@ -28,6 +29,20 @@ public class Habit implements Parcelable {
         this.category = category;
         this.currentDaysCount = 0;
         this.completedDaysCount = 0;
+    }
+
+    public Habit(Habit habit){
+        this.name = habit.getName();
+        this.description = habit.getDescription();
+        this.startDate = habit.getStartDate();
+        this.endDate = habit.getEndDate();
+        this.category = habit.getCategory();
+        this.currentDaysCount = habit.getCurrentDaysCount();
+        this.completedDaysCount = habit.getCompletedDaysCount();
+    }
+
+    public Habit clone(){
+        return new Habit(this);
     }
 
     protected Habit(Parcel in) {
@@ -117,6 +132,19 @@ public class Habit implements Parcelable {
 
     public void decreaseCompletedDaysCount(){
         this.completedDaysCount--;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Habit habit = (Habit) o;
+        return Objects.equals(name, habit.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, startDate, endDate, category, currentDaysCount, completedDaysCount);
     }
 
     @Override

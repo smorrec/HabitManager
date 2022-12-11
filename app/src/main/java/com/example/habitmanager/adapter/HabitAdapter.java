@@ -1,6 +1,5 @@
 package com.example.habitmanager.adapter;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.habitmanager.data.HabitRepository;
+import com.example.habitmanager.data.repository.HabitRepository;
 import com.example.habitmanager.data.model.Habit;
 import com.example.habitmanager.databinding.ItemHabitBinding;
 
@@ -17,16 +16,13 @@ import java.util.ArrayList;
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
     private ArrayList<Habit> list;
     private OnItemClickListener listener;
-    public int selectedPosition = -1;
+    public static int selectedPosition = -1;
 
     public HabitAdapter(OnItemClickListener listener) {
-        this.list = HabitRepository.getInstance().getList();
+        this.list = new ArrayList<>();
         this.listener = listener;
     }
 
-    public ArrayList<Habit> getList(){
-        return list;
-    }
 
     public void deleteHabit(int position){
         list.remove(position);
@@ -49,6 +45,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull HabitAdapter.ViewHolder holder, int position) {
         holder.binding.textView.setText(list.get(position).getName());
+        holder.binding.avatarImageView2.setImageResource(list.get(position).getCategory().getPicture());
         holder.binding.getRoot().setSelected(position == selectedPosition);
     }
 
@@ -83,7 +80,14 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
         }
     }
 
-    public interface OnItemClickListener extends View.OnLongClickListener {
+    public interface OnItemClickListener{
         void onClick(View view, int position);
+    }
+
+    public void updateData(ArrayList<Habit> data){
+        list.clear();
+        list.addAll(data);
+        selectedPosition = -1;
+        notifyDataSetChanged();
     }
 }

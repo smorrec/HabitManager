@@ -12,17 +12,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.AddHabitFragment"
+        tools:context=".ui.habit.HabitManagerFragment"
         android:orientation="vertical"
         android:background="@color/primaryLightColor">
 
         <!-- TODO: Update blank fragment layout -->
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtHabitNameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            app:errorEnabled="true"
             style="@style/TextinputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -30,7 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/HabitName"
-                android:text="@={habit.name}" />
+                android:text="@={habit.name}"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -41,6 +44,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            app:errorEnabled="true"
             style="@style/TextinputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -53,6 +57,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtStartDateLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -64,9 +69,9 @@
                 android:id="@+id/txtStartDatePicker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="date"
                 android:focusable="false"
                 android:clickable="true"
-                android:inputType="date"
                 android:hint="@string/DatePicker"
                 android:text="@={habit.startDate}"/>
 
@@ -84,9 +89,9 @@
                 android:id="@+id/txtEndDatePicker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="date"
                 android:focusable="false"
                 android:clickable="true"
-                android:inputType="date"
                 android:hint="@string/EndDatePicker"
                 android:text="@={habit.endDate}"/>
 
@@ -94,7 +99,7 @@
 
         <Spinner
             android:id="@+id/CategorySpinner"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
@@ -118,7 +123,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/ic_action_check"
                 android:contentDescription="@string/addFAB"
-                android:backgroundTint="@color/primaryColor"/>
+                android:backgroundTint="@color/primaryDarkColor"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

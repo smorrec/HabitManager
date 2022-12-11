@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.habitmanager.data.HabitRepository;
+import com.example.habitmanager.data.repository.HabitRepository;
 import com.example.habitmanager.data.model.Habit;
 import com.example.habitmanager.databinding.ItemHabitBinding;
 

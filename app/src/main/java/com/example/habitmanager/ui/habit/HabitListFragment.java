@@ -1,10 +1,11 @@
-package com.example.habitmanager.ui;
+package com.example.habitmanager.ui.habit;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,11 +20,11 @@ import com.example.habitmanager.adapter.HabitAdapter;
 import com.example.habitmanager.data.model.Habit;
 import com.example.habitmanager.databinding.FragmentHabitListBinding;
 
-
 public class HabitListFragment extends Fragment implements HabitAdapter.OnItemClickListener {
     private FragmentHabitListBinding binding;
     private HabitAdapter adapter;
-    private int selectedHabit;
+    private HabitListViewModel viewModel;
+    private int selectedHabit = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,13 +42,12 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.fab.setOnClickListener(view1 -> {
-            NavHostFragment.findNavController(this).navigate(R.id.action_habitListFragment_to_addHabitFragment);
-        });
+        binding.fab.setOnClickListener(view1 ->  habitManagerFragment(null));
+
         binding.bottomAppBar.setOnMenuItemClickListener(menuItem ->{
             switch (menuItem.getItemId()){
                 case R.id.btnEditHabit:
-                    editHabit();
+                    habitManagerFragment(setBundle());
                     return true;
                 case R.id.btnDeleteHabit:
                     deleteHabit();
@@ -61,26 +61,46 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
             }
             return false;
         });
+
         initRvHabit();
+        initViewModel();
     }
 
     private void initRvHabit(){
         adapter = new HabitAdapter(this);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),
+                RecyclerView.VERTICAL, false);
 
         binding.rvHabit.setLayoutManager(linearLayoutManager);
 
         binding.rvHabit.setAdapter(adapter);
     }
 
-    @Override
-    public boolean onLongClick(View view) {
-        return false;
+    private void initViewModel(){
+        viewModel = new ViewModelProvider(this).get(HabitListViewModel.class);
+        viewModel.getStateLiveDataList().observe(getViewLifecycleOwner(), arrayListStateDataList -> {
+            switch (arrayListStateDataList.getState()){
+                case LOADING:
+                    break;
+                case NODATA:
+                    arrayListStateDataList.setCompleted();
+                    break;
+                case SUCCESS:
+                    adapter.updateData(arrayListStateDataList.getData());
+                    arrayListStateDataList.setCompleted();
+                    break;
+                case COMPLETED:
+                    break;
+            }
+        });
+
+        viewModel.getDataList();
     }
 
-    private void editHabit(){
-        NavHostFragment.findNavController(this).navigate(R.id.action_habitListFragment_to_editHabitFragment, setBundle());
+    private void habitManagerFragment(Bundle bundle){
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_habitListFragment_to_habitManagerFragment, bundle);
 
     }
 
@@ -120,4 +140,6 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
         selectedHabit = position;
         binding.bottomAppBar.performShow();
     }
+
+
 }
