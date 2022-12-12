@@ -105,7 +105,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:minHeight="48dp"/>
+            android:minHeight="48dp"
+            android:selectedItemPosition="@{habit.category.id}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
