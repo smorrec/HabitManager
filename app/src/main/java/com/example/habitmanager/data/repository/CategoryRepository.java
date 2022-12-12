@@ -20,9 +20,9 @@ public class CategoryRepository {
     public ArrayList<Category> getList() {
         list = new ArrayList<>();
 
-        list.add(new Category(1, "Actividad Fisica", R.drawable.ic_action_fit));
-        list.add(new Category(2, "Entretenimiento",R.drawable.ic_etertainmet));
-        list.add(new Category(3, "Idiomas", R.drawable.ic_languages));
+        list.add(new Category(0, "Actividad Fisica", R.drawable.ic_action_fit));
+        list.add(new Category(1, "Entretenimiento",R.drawable.ic_etertainmet));
+        list.add(new Category(2, "Idiomas", R.drawable.ic_languages));
 
         return list;
     }

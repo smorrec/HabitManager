@@ -23,7 +23,7 @@ import com.example.habitmanager.data.model.Category;
 import com.example.habitmanager.data.model.Habit;
 import com.example.habitmanager.data.repository.CategoryRepository;
 import com.example.habitmanager.databinding.FragmentAddEditHabitBinding;
-import com.example.habitmanager.ui.DatePickerFragment;
+import com.example.habitmanager.ui.utils.DatePickerFragment;
 import com.example.habitmanager.ui.base.BaseFragment;
 
 public class HabitManagerFragment extends BaseFragment {
