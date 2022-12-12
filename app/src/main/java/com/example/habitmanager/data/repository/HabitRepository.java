@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class HabitRepository {
     private ArrayList<Habit> list;
     private static HabitRepository instance;
+    private int deletedPosition = -1;
 
     private HabitRepository(){
         initialize();
@@ -72,5 +73,10 @@ public class HabitRepository {
             success = true;
         }
         return success;
+    }
+
+    public void deleteHabit(Habit habit){
+        deletedPosition = list.indexOf(habit);
+        list.remove(habit);
     }
 }

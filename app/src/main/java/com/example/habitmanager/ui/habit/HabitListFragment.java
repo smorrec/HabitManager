@@ -19,11 +19,13 @@ import com.example.habitmanager.R;
 import com.example.habitmanager.adapter.HabitAdapter;
 import com.example.habitmanager.data.model.Habit;
 import com.example.habitmanager.databinding.FragmentHabitListBinding;
+import com.example.habitmanager.ui.base.BaseFragmentDialog;
 
 public class HabitListFragment extends Fragment implements HabitAdapter.OnItemClickListener {
     private FragmentHabitListBinding binding;
     private HabitAdapter adapter;
     private HabitListViewModel viewModel;
+    public static final String TAG = "habitList";
     private int selectedHabit = -1;
 
     @Override
@@ -105,13 +107,20 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
     }
 
     private void deleteHabit(){
-        try {
-            adapter.deleteHabit(selectedHabit);
-            adapter.selectedPosition = -1;
-            binding.bottomAppBar.replaceMenu(R.menu.menu_main);
-            Toast.makeText(getContext(), R.string.deletedHabit, Toast.LENGTH_SHORT).show();
-        }catch (Exception e){
-        }
+        Bundle bundle = new Bundle();
+        bundle.putString(BaseFragmentDialog.KEY_TITLE, getString(R.string.tittleDeleteHabit));
+        bundle.putString(BaseFragmentDialog.KEY_MESSAGE, getString(R.string.messageDeleteDependency, adapter.getItem(selectedHabit).getName()));
+        bundle.putString(BaseFragmentDialog.KEY_REQUEST, HabitListFragment.TAG);
+        NavHostFragment.findNavController(this).navigate(R.id.action_habitListFragment_to_baseFragmentDialog, bundle);
+        getActivity().getSupportFragmentManager().setFragmentResultListener(HabitListFragment.TAG, getViewLifecycleOwner(), (requestKey, result) -> {
+            if(result.getBoolean(BaseFragmentDialog.KEY_BUNDLE)){
+                viewModel.delete(selectedHabit);
+                adapter.deleteHabit(selectedHabit);
+                adapter.selectedPosition = -1;
+                binding.bottomAppBar.replaceMenu(R.menu.menu_main);
+            }
+        });
+
     }
 
     private void viewHabit(){

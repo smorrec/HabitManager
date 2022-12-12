@@ -41,13 +41,6 @@ public class HabitManagerFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         binding = FragmentAddEditHabitBinding.inflate(inflater);
 
-        binding.txtStartDatePicker.setOnClickListener(view -> showStartDatePickerDialog(view));
-        binding.txtEndDatePicker.setOnClickListener(view -> showEndDatePickerDialog(view));
-        binding.fab.setOnClickListener(view -> viewModel.addHabit(binding.getHabit(),
-                (Category)binding.CategorySpinner.getSelectedItem()));
-        binding.txtHabitName.addTextChangedListener(new HabitTextWatcher(binding.txtHabitName));
-        binding.txtStartDatePicker.addTextChangedListener(new HabitTextWatcher(binding.txtStartDatePicker));
-
         adapter = new CategoryAdapter(getContext(), R.layout.item_category, CategoryRepository.getInstance().getList());
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -62,6 +55,14 @@ public class HabitManagerFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        binding.txtStartDatePicker.setOnClickListener(startDatePicker -> showStartDatePickerDialog(view));
+        binding.txtEndDatePicker.setOnClickListener(endDatePicker -> showEndDatePickerDialog(view));
+        binding.fab.setOnClickListener(fab -> viewModel.addHabit(binding.getHabit(),
+                (Category)binding.CategorySpinner.getSelectedItem()));
+        binding.txtHabitName.addTextChangedListener(new HabitTextWatcher(binding.txtHabitName));
+        binding.txtStartDatePicker.addTextChangedListener(new HabitTextWatcher(binding.txtStartDatePicker));
+
         if(getArguments() != null){
             showEdit();
         }

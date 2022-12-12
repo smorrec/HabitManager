@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_habitListFragment_to_habitManagerFragment"
             app:destination="@id/habitManagerFragment" />
+        <action
+            android:id="@+id/action_habitListFragment_to_baseFragmentDialog"
+            app:destination="@id/baseFragmentDialog" />
     </fragment>
     <fragment
         android:id="@+id/habitViewFragment"
@@ -63,4 +66,8 @@
         android:id="@+id/habitManagerFragment"
         android:name="com.example.habitmanager.ui.habit.HabitManagerFragment"
         android:label="HabitManagerFragment" />
+    <dialog
+        android:id="@+id/baseFragmentDialog"
+        android:name="com.example.habitmanager.ui.base.BaseFragmentDialog"
+        android:label="BaseFragmentDialog" />
 </navigation>

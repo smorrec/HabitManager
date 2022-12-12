@@ -36,4 +36,6 @@
     <string name="linkedIn">sergio-morales-recio-b23661178</string>
     <string name="action_AboutUs">About Us</string>
     <string name="Habit">Hábitos</string>
+    <string name="tittleDeleteHabit">Borrar Hábito</string>
+    <string name="messageDeleteDependency">¿Quiere eliminar el elemento %1$s?</string>
 </resources>

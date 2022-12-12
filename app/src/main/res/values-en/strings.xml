@@ -35,4 +35,7 @@
     <string name="gitHub">smorrec/HabitManager</string>
     <string name="linkedIn">sergio-morales-recio-b23661178</string>
     <string name="action_AboutUs">About Us</string>
+    <string name="Habit">Habits</string>
+    <string name="tittleDeleteHabit">Delete Habit</string>
+    <string name="messageDeleteDependency">Do you want to delete %1$s?</string>
 </resources>
