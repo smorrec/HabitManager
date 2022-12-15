@@ -43,4 +43,5 @@
     <string name="HabitManager">Añadir/Editar Hábito</string>
     <string name="AboutUs">Sobre Mí</string>
     <string name="Description">Descripción</string>
+    <string name="undo">Deshacer</string>
 </resources>

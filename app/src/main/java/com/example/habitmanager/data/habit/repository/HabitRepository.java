@@ -80,4 +80,8 @@ public class HabitRepository {
         deletedPosition = list.indexOf(habit);
         list.remove(habit);
     }
+
+    public void undo(Habit habit) {
+        list.add(deletedPosition, habit);
+    }
 }

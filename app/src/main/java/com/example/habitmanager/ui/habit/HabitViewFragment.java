@@ -32,6 +32,6 @@ public class HabitViewFragment extends Fragment {
     }
 
     private void goBack(){
-        NavHostFragment.findNavController(this).navigate(R.id.action_habitViewFragment_to_habitListFragment);
+        NavHostFragment.findNavController(this).navigateUp();
     }
 }

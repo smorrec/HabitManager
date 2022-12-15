@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +24,7 @@ import com.example.habitmanager.adapter.HabitAdapter;
 import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.databinding.FragmentHabitListBinding;
 import com.example.habitmanager.ui.base.BaseFragmentDialog;
+import com.google.android.material.snackbar.Snackbar;
 
 public class HabitListFragment extends Fragment implements HabitAdapter.OnItemClickListener {
     private FragmentHabitListBinding binding;
@@ -71,10 +73,12 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.action_orderByCategory){
-            adapter.orderByCategory();
+        switch (item.getItemId()){
+            case R.id.action_orderByCategory:
+                adapter.orderByCategory();
+                return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -95,6 +99,7 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
 
     private void initViewModel(){
         viewModel = new ViewModelProvider(this).get(HabitListViewModel.class);
+
         viewModel.getStateLiveDataList().observe(getViewLifecycleOwner(), arrayListStateDataList -> {
             switch (arrayListStateDataList.getState()){
                 case LOADING:
@@ -108,6 +113,17 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
                     break;
                 case COMPLETED:
                     break;
+            }
+        });
+
+        viewModel.getDeletedHabit().observe(getViewLifecycleOwner(), habit -> {
+            if(viewModel.isUndoEnabled()) {
+                Snackbar.make(getView(), "Deshacer eliminar " + habit.getName(), Snackbar.LENGTH_SHORT)
+                        .setAction(R.string.undo, view -> {
+                            viewModel.undo();
+                            adapter.undo(habit);
+                        })
+                        .show();
             }
         });
 
@@ -131,6 +147,7 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
                 viewModel.delete(selectedHabit);
                 adapter.deleteHabit(selectedHabit);
                 adapter.selectedPosition = -1;
+                binding.bottomAppBar.performHide();
             }
         });
 
@@ -154,6 +171,7 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
     @Override
     public void onClick(View view, int position) {
         if(view.isSelected()){
+            binding.bottomAppBar.setVisibility(View.VISIBLE);
             binding.bottomAppBar.performShow();
         }else{
             binding.bottomAppBar.performHide();
@@ -165,5 +183,11 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
     public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d("list", "onDestroy()");
     }
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class HabitListViewModel extends ViewModel {
     private StateLiveDataList<ArrayList<Habit>> stateLiveDataList = new StateLiveDataList<>();
     private MutableLiveData<Habit> deletedHabit = new MutableLiveData<>();
+    private boolean undoEnabled = true;
 
     public StateLiveDataList<ArrayList<Habit>> getStateLiveDataList() {
         return stateLiveDataList;
@@ -31,6 +32,20 @@ public class HabitListViewModel extends ViewModel {
     public void delete(int position) {
         Habit habit = HabitRepository.getInstance().getList().get(position);
         HabitRepository.getInstance().deleteHabit(habit);
+        undoEnabled = true;
         deletedHabit.setValue(habit);
+    }
+
+    public MutableLiveData<Habit> getDeletedHabit() {
+        return deletedHabit;
+    }
+
+    public boolean isUndoEnabled() {
+        return undoEnabled;
+    }
+
+    public void undo() {
+        HabitRepository.getInstance().undo(deletedHabit.getValue());
+        undoEnabled = false;
     }
 }
