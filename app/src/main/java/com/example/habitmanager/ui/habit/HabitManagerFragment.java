@@ -54,8 +54,8 @@ public class HabitManagerFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.txtStartDatePicker.setOnClickListener(startDatePicker -> showStartDatePickerDialog(view));
-        binding.txtEndDatePicker.setOnClickListener(endDatePicker -> showEndDatePickerDialog(view));
+        binding.txtStartDatePicker.setOnClickListener(startDatePicker -> showStartDatePickerDialog());
+        binding.txtEndDatePicker.setOnClickListener(endDatePicker -> showEndDatePickerDialog());
         binding.fab.setOnClickListener(fab -> viewModel.addHabit(binding.getHabit(),
                 (Category)binding.CategorySpinner.getSelectedItem()));
         binding.txtHabitName.addTextChangedListener(new HabitTextWatcher(binding.txtHabitName));
@@ -90,7 +90,7 @@ public class HabitManagerFragment extends BaseFragment {
         });
     }
 
-    public void showStartDatePickerDialog(View v) {
+    public void showStartDatePickerDialog() {
         DatePickerFragment newFragment = DatePickerFragment.newInstance((datePicker, year, month, day) -> {
             final String selectedDate = day + " / " + (month+1) + " / " + year;
             binding.txtStartDatePicker.setText(selectedDate);
@@ -98,7 +98,7 @@ public class HabitManagerFragment extends BaseFragment {
         newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
 
-    public void showEndDatePickerDialog(View v) {
+    public void showEndDatePickerDialog() {
         DatePickerFragment newFragment = DatePickerFragment.newInstance((datePicker, year, month, day) -> {
             final String selectedDate = day + " / " + (month+1) + " / " + year;
             binding.txtEndDatePicker.setText(selectedDate);

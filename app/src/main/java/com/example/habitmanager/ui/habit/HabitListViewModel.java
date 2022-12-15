@@ -21,6 +21,7 @@ public class HabitListViewModel extends ViewModel {
         stateLiveDataList.setLoading();
 
         ArrayList<Habit> list = HabitRepository.getInstance().getList();
+
         if(list.isEmpty()){
             stateLiveDataList.setNoData();
         }else {

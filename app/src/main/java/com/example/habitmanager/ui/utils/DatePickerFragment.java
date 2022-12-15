@@ -20,6 +20,7 @@ public class DatePickerFragment  extends DialogFragment{
     private void setListener(DatePickerDialog.OnDateSetListener listener){
         this.listener = listener;
     }
+
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current date as the default date in the picker
         final Calendar c = Calendar.getInstance();

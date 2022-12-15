@@ -48,7 +48,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
         ItemHabitBinding binding = ItemHabitBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         ViewHolder viewHolder = new ViewHolder(binding.getRoot());
         Log.d("show", viewHolder.binding.textView.getText().toString());
-        viewHolder.binding.descriptionnBtn.setOnClickListener(view -> viewHolder.showDescription());
         return viewHolder;
     }
 
@@ -57,9 +56,17 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
         holder.binding.textView.setText(list.get(position).getName());
         holder.binding.avatarImageView2.setImageResource(list.get(position).getCategory().getPicture());
         holder.binding.descriptionCotent.setText(list.get(position).getDescription());
-
+        holder.binding.descriptionnBtn.setOnClickListener(view -> holder.showDescription());
         holder.binding.getRoot().setSelected(position == selectedPosition);
     }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
+
+
 
     @Override
     public int getItemCount() {

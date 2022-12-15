@@ -47,6 +47,7 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         binding.fab.setOnClickListener(view1 ->  habitManagerFragment(null));
         binding.bottomAppBar.setOnMenuItemClickListener(menuItem ->{
             switch (menuItem.getItemId()){
@@ -64,17 +65,21 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
         });
 
         binding.bottomAppBar.setVisibility(View.INVISIBLE);
+        binding.bottomAppBar.performHide();
 
         initRvHabit();
         initViewModel();
     }
 
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.action_orderByCategory){
-            adapter.orderByCategory();
+        switch (item.getItemId()){
+            case R.id.action_orderByCategory:
+                adapter.orderByCategory();
+                return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -154,6 +159,7 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
     @Override
     public void onClick(View view, int position) {
         if(view.isSelected()){
+            binding.bottomAppBar.setVisibility(View.VISIBLE);
             binding.bottomAppBar.performShow();
         }else{
             binding.bottomAppBar.performHide();
