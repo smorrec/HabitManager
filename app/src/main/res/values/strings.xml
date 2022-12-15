@@ -38,4 +38,9 @@
     <string name="Habit">Hábitos</string>
     <string name="tittleDeleteHabit">Borrar Hábito</string>
     <string name="messageDeleteDependency">¿Quiere eliminar el elemento %1$s?</string>
+    <string name="orderByCategory">orderByCategory</string>
+    <string name="HabitView">Detalles</string>
+    <string name="HabitManager">Añadir/Editar Hábito</string>
+    <string name="AboutUs">Sobre Mí</string>
+    <string name="Description">Descripción</string>
 </resources>

@@ -1,8 +1,8 @@
-package com.example.habitmanager.data.repository;
+package com.example.habitmanager.data.category.repository;
 
 
 import com.example.habitmanager.R;
-import com.example.habitmanager.data.model.Category;
+import com.example.habitmanager.data.category.model.Category;
 
 import java.util.ArrayList;
 

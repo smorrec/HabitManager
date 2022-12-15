@@ -12,16 +12,14 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.example.habitmanager.R;
 import com.example.habitmanager.adapter.CategoryAdapter;
-import com.example.habitmanager.data.model.Category;
-import com.example.habitmanager.data.model.Habit;
-import com.example.habitmanager.data.repository.CategoryRepository;
+import com.example.habitmanager.data.category.model.Category;
+import com.example.habitmanager.data.habit.model.Habit;
+import com.example.habitmanager.data.category.repository.CategoryRepository;
 import com.example.habitmanager.databinding.FragmentAddEditHabitBinding;
 import com.example.habitmanager.ui.utils.DatePickerFragment;
 import com.example.habitmanager.ui.base.BaseFragment;
@@ -111,6 +109,7 @@ public class HabitManagerFragment extends BaseFragment {
     private void showEdit(){
         Habit habit = getArguments().getParcelable(Habit.KEY);
         binding.setHabit(habit.clone());
+
         binding.fab.setOnClickListener(view -> viewModel.editHabit(binding.getHabit(), habit,
                 (Category) binding.CategorySpinner.getSelectedItem()));
     }

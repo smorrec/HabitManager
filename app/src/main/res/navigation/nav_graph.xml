@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/habitListFragment"
         android:name="com.example.habitmanager.ui.habit.HabitListFragment"
-        android:label="fragment_habit_list"
+        android:label="@string/Habit"
         tools:layout="@layout/fragment_habit_list" >
         <action
             android:id="@+id/action_habitListFragment_to_habitViewFragment"
@@ -50,7 +50,7 @@
     <fragment
         android:id="@+id/habitViewFragment"
         android:name="com.example.habitmanager.ui.habit.HabitViewFragment"
-        android:label="HabitViewFragment" >
+        android:label="@string/HabitView" >
         <action
             android:id="@+id/action_habitViewFragment_to_habitListFragment"
             app:destination="@id/habitListFragment"
@@ -61,13 +61,13 @@
         android:id="@+id/aboutUsFragment"
         android:name="com.example.habitmanager.ui.AboutUsFragment"
         android:label="fragment_about_us"
-        tools:layout="@layout/fragment_about_us" />
+        tools:layout="@layout/fragment_about_us"/>
     <fragment
         android:id="@+id/habitManagerFragment"
         android:name="com.example.habitmanager.ui.habit.HabitManagerFragment"
-        android:label="HabitManagerFragment" />
+        android:label="@string/HabitManager" />
     <dialog
         android:id="@+id/baseFragmentDialog"
         android:name="com.example.habitmanager.ui.base.BaseFragmentDialog"
-        android:label="BaseFragmentDialog" />
+        android:label="@string/AboutUs" />
 </navigation>

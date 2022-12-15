@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.habitmanager.R;
-import com.example.habitmanager.data.model.Category;
+import com.example.habitmanager.data.category.model.Category;
 
 import java.util.ArrayList;
 

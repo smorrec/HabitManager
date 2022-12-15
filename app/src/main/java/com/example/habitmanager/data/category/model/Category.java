@@ -1,8 +1,8 @@
-package com.example.habitmanager.data.model;
+package com.example.habitmanager.data.category.model;
 
 import java.util.Objects;
 
-public class Category {
+public class Category implements Comparable<Category>{
     private int id;
     private String name;
     private int picture;
@@ -57,5 +57,15 @@ public class Category {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public int compareTo(Category category) {
+        if(this.getId() < category.getId()){
+            return -1;
+        }else if(this.getId() > category.getId()){
+            return 1;
+        }
+        return 0;
     }
 }

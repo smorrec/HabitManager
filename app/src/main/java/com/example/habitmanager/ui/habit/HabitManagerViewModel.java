@@ -5,9 +5,9 @@ import android.text.TextUtils;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.habitmanager.data.model.Category;
-import com.example.habitmanager.data.model.Habit;
-import com.example.habitmanager.data.repository.HabitRepository;
+import com.example.habitmanager.data.category.model.Category;
+import com.example.habitmanager.data.habit.model.Habit;
+import com.example.habitmanager.data.habit.repository.HabitRepository;
 
 public class HabitManagerViewModel extends ViewModel {
     private MutableLiveData<HabitManagerResult> resultMutableLiveData = new MutableLiveData<>();

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -11,13 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.habitmanager.R;
 import com.example.habitmanager.adapter.HabitAdapter;
-import com.example.habitmanager.data.model.Habit;
+import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.databinding.FragmentHabitListBinding;
 import com.example.habitmanager.ui.base.BaseFragmentDialog;
 
@@ -31,12 +34,12 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentHabitListBinding.inflate(inflater);
         return binding.getRoot();
     }
@@ -45,7 +48,6 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.fab.setOnClickListener(view1 ->  habitManagerFragment(null));
-
         binding.bottomAppBar.setOnMenuItemClickListener(menuItem ->{
             switch (menuItem.getItemId()){
                 case R.id.btnEditHabit:
@@ -57,15 +59,27 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
                 case R.id.btnViewHabit:
                     viewHabit();
                     return true;
-                case R.id.action_AboutUs:
-                    showAboutUs();
-                    return true;
             }
             return false;
         });
 
+        binding.bottomAppBar.setVisibility(View.INVISIBLE);
+
         initRvHabit();
         initViewModel();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.action_orderByCategory){
+            adapter.orderByCategory();
+        }
+        return true;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.menu_main, menu);
     }
 
     private void initRvHabit(){
@@ -117,7 +131,6 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
                 viewModel.delete(selectedHabit);
                 adapter.deleteHabit(selectedHabit);
                 adapter.selectedPosition = -1;
-                binding.bottomAppBar.replaceMenu(R.menu.menu_main);
             }
         });
 
@@ -140,15 +153,17 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
 
     @Override
     public void onClick(View view, int position) {
-
         if(view.isSelected()){
-            binding.bottomAppBar.replaceMenu(R.menu.menu_list);
+            binding.bottomAppBar.performShow();
         }else{
-            binding.bottomAppBar.replaceMenu(R.menu.menu_main);
+            binding.bottomAppBar.performHide();
         }
         selectedHabit = position;
-        binding.bottomAppBar.performShow();
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+    }
 }

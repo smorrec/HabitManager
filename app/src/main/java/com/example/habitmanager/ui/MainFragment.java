@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -48,11 +49,6 @@ public class MainFragment extends Fragment implements CalendarAdapter.OnItemClic
         binding.bottomAppBar.setNavigationIcon(null);
         binding.fab.setOnClickListener(view2 -> showHabit());
         binding.bottomAppBar.setOnMenuItemClickListener(menuItem ->{
-            switch (menuItem.getItemId()){
-                case R.id.action_AboutUs:
-                    showAboutUs();
-                    return true;
-            }
             return false;
         });
     }
@@ -84,5 +80,12 @@ public class MainFragment extends Fragment implements CalendarAdapter.OnItemClic
     @Override
     public void onClick(View view, int position) {
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 }

@@ -38,4 +38,8 @@
     <string name="Habit">Habits</string>
     <string name="tittleDeleteHabit">Delete Habit</string>
     <string name="messageDeleteDependency">Do you want to delete %1$s?</string>
+    <string name="orderByCategory">orderByCategory</string>
+    <string name="HabitView">Details</string>
+    <string name="HabitManager">Add/Edit Habit</string>
+    <string name="AboutUs">About Me</string>
 </resources>

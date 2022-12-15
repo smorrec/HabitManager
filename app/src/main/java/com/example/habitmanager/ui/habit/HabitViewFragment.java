@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.habitmanager.R;
-import com.example.habitmanager.data.model.Habit;
+import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.databinding.FragmentHabitViewBinding;
 
 public class HabitViewFragment extends Fragment {

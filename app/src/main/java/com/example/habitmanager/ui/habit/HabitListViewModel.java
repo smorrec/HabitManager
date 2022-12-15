@@ -3,8 +3,8 @@ package com.example.habitmanager.ui.habit;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.habitmanager.data.model.Habit;
-import com.example.habitmanager.data.repository.HabitRepository;
+import com.example.habitmanager.data.habit.model.Habit;
+import com.example.habitmanager.data.habit.repository.HabitRepository;
 import com.example.habitmanager.viewmodel.StateLiveDataList;
 
 import java.util.ArrayList;

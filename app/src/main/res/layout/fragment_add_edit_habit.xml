@@ -6,7 +6,7 @@
     <data>
         <variable
             name="habit"
-            type="com.example.habitmanager.data.model.Habit" />
+            type="com.example.habitmanager.data.habit.model.Habit" />
     </data>
 
     <LinearLayout

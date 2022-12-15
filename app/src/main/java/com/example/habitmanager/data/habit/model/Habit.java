@@ -1,9 +1,10 @@
-package com.example.habitmanager.data.model;
+package com.example.habitmanager.data.habit.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Date;
+import com.example.habitmanager.data.category.model.Category;
+
 import java.util.Objects;
 
 public class Habit implements Parcelable {
