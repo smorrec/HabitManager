@@ -49,6 +49,7 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         binding.fab.setOnClickListener(view1 ->  habitManagerFragment(null));
         binding.bottomAppBar.setOnMenuItemClickListener(menuItem ->{
             switch (menuItem.getItemId()){
@@ -66,10 +67,12 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
         });
 
         binding.bottomAppBar.setVisibility(View.INVISIBLE);
+        binding.bottomAppBar.performHide();
 
         initRvHabit();
         initViewModel();
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

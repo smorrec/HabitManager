@@ -15,7 +15,4 @@ public class StateLiveDataList<T> extends MutableLiveData<StateDataList<T>> {
         setValue(new StateDataList<T>().setSuccess(data));
     }
 
-    public void setCompleted(){
-        setValue(new StateDataList<T>().setCompleted());
-    }
 }
