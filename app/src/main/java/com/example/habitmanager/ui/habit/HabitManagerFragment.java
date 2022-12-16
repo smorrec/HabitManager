@@ -23,6 +23,7 @@ import com.example.habitmanager.data.category.repository.CategoryRepository;
 import com.example.habitmanager.databinding.FragmentAddEditHabitBinding;
 import com.example.habitmanager.ui.utils.DatePickerFragment;
 import com.example.habitmanager.ui.base.BaseFragment;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class HabitManagerFragment extends BaseFragment {
     private FragmentAddEditHabitBinding binding;
@@ -54,8 +55,8 @@ public class HabitManagerFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.txtStartDatePicker.setOnClickListener(startDatePicker -> showStartDatePickerDialog());
-        binding.txtEndDatePicker.setOnClickListener(endDatePicker -> showEndDatePickerDialog());
+        binding.txtStartDatePicker.setOnClickListener(startDatePicker -> showDatePickerDialog(binding.txtStartDatePicker));
+        binding.txtEndDatePicker.setOnClickListener(endDatePicker -> showDatePickerDialog(binding.txtEndDatePicker));
         binding.fab.setOnClickListener(fab -> viewModel.addHabit(binding.getHabit(),
                 (Category)binding.CategorySpinner.getSelectedItem()));
         binding.txtHabitName.addTextChangedListener(new HabitTextWatcher(binding.txtHabitName));
@@ -90,18 +91,10 @@ public class HabitManagerFragment extends BaseFragment {
         });
     }
 
-    public void showStartDatePickerDialog() {
+    public void showDatePickerDialog(TextInputEditText editText) {
         DatePickerFragment newFragment = DatePickerFragment.newInstance((datePicker, year, month, day) -> {
             final String selectedDate = day + " / " + (month+1) + " / " + year;
-            binding.txtStartDatePicker.setText(selectedDate);
-        });
-        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-    }
-
-    public void showEndDatePickerDialog() {
-        DatePickerFragment newFragment = DatePickerFragment.newInstance((datePicker, year, month, day) -> {
-            final String selectedDate = day + " / " + (month+1) + " / " + year;
-            binding.txtEndDatePicker.setText(selectedDate);
+            editText.setText(selectedDate);
         });
         newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
@@ -123,12 +116,10 @@ public class HabitManagerFragment extends BaseFragment {
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
         }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
         }
 
         @Override

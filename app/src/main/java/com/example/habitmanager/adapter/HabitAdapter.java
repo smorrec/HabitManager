@@ -68,6 +68,40 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
         holder.binding.descriptionCotent.setText(list.get(position).getDescription());
         holder.binding.getRoot().setSelected(position == selectedPosition);
 
+        if(!positionDescriptionShowed.contains(position)){
+            hideDescription(holder);
+        }else {
+            showDescription(holder);
+        }
+    }
+
+    private void hideDescription(ViewHolder holder){
+        holder.binding.description.setVisibility(View.GONE);
+        holder.binding.descriptionnBtn.setImageResource(R.drawable.ic_arrow_down);
+        holder.binding.descriptionnBtn.setOnClickListener(view -> {
+            holder.binding.description.setVisibility(View.VISIBLE);
+            AlphaAnimation animation = new AlphaAnimation(0, 1.0f);
+            animation.setDuration(500);
+            animation.setFillAfter(true);
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    holder.addPosition();
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+            });
+            holder.binding.description.startAnimation(animation);
+        });
+    }
+
+    private void showDescription(ViewHolder holder){
         holder.binding.description.setVisibility(View.VISIBLE);
         holder.binding.descriptionnBtn.setImageResource(R.drawable.ic_arrow_up);
         holder.binding.descriptionnBtn.setOnClickListener(view -> {
@@ -82,7 +116,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    holder.hideDescription();
+                    holder.removePosition();
                 }
 
                 @Override
@@ -92,32 +126,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
             });
             holder.binding.description.startAnimation(animation);
         });
-
-        if(!positionDescriptionShowed.contains(position)){
-            holder.binding.description.setVisibility(View.GONE);
-            holder.binding.descriptionnBtn.setImageResource(R.drawable.ic_arrow_down);
-            holder.binding.descriptionnBtn.setOnClickListener(view -> {
-                holder.binding.description.setVisibility(View.VISIBLE);
-                AlphaAnimation animation = new AlphaAnimation(0, 1.0f);
-                animation.setDuration(500);
-                animation.setFillAfter(true);
-                animation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        holder.showDescription();
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-                });
-                holder.binding.description.startAnimation(animation);
-            });
-        }
     }
 
     @Override
@@ -134,12 +142,12 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
             binding = ItemHabitBinding.bind(itemView);
         }
 
-        private void showDescription(){
+        private void addPosition(){
             positionDescriptionShowed.add(getLayoutPosition());
             notifyDataSetChanged();
         }
 
-        private void hideDescription(){
+        private void removePosition(){
             positionDescriptionShowed.remove((Integer) getLayoutPosition());
             notifyDataSetChanged();
         }
