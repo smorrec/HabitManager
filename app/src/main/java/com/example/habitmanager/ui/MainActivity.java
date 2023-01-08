@@ -3,18 +3,18 @@ package com.example.habitmanager.ui;
 import android.os.Bundle;
 
 import com.example.habitmanager.R;
-import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.habitmanager.databinding.ActivityMainBinding;
+import com.google.android.material.navigation.NavigationBarView;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,28 +34,33 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        appBarConfiguration = new AppBarConfiguration.Builder(R.id.MainFragment, R.id.habitListFragment).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-
+        binding.bottomNavigation.setOnItemSelectedListener(item -> {
+            NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.nav_graph, true).build();
+            switch (item.getItemId()){
+                case R.id.homeMenu:
+                    Navigation.findNavController(this,  R.id.nav_host_fragment_content_main).navigate(R.id.MainFragment, null, navOptions);
+                    return true;
+                case R.id.listMenu:
+                    Navigation.findNavController(this,  R.id.nav_host_fragment_content_main).navigate(R.id.habitListFragment, null, navOptions);
+                    return true;
+                case R.id.completedMenu:
+                    return true;
+            }
+            return false;
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
         return super.onOptionsItemSelected(item);
     }
 

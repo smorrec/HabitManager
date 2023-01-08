@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <data>
         <variable
@@ -9,123 +10,144 @@
             type="com.example.habitmanager.data.habit.model.Habit" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.habit.HabitManagerFragment"
         android:orientation="vertical"
-        android:background="@color/primaryLightColor">
+        tools:context=".ui.habit.HabitManagerFragment"
+        android:transitionName="@string/add_transition">
 
         <!-- TODO: Update blank fragment layout -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtHabitNameLayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             app:errorEnabled="true"
-            style="@style/TextinputLayout">
+            app:layout_constraintTop_toBottomOf="@+id/guideTop"
+            app:layout_constraintEnd_toStartOf="@+id/guideEnd"
+            app:layout_constraintStart_toEndOf="@+id/guideStart">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtHabitName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/HabitName"
-                android:text="@={habit.name}"
-                />
+                android:text="@={habit.name}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
+            android:id="@+id/txtHabitDescriptionLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             app:errorEnabled="true"
-            style="@style/TextinputLayout">
+            app:layout_constraintTop_toBottomOf="@+id/txtHabitNameLayout"
+            app:layout_constraintEnd_toStartOf="@+id/guideEnd"
+            app:layout_constraintStart_toEndOf="@+id/guideStart"
+            android:layout_marginTop="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtHabitDescription"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/HabitDescription"
-                android:text="@={habit.description}"/>
+                android:text="@={habit.description}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtStartDateLayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            style="@style/TextinputLayout">
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideEnd"
+            app:layout_constraintStart_toEndOf="@+id/guideStart"
+            app:layout_constraintTop_toBottomOf="@+id/txtHabitDescriptionLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtStartDatePicker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="date"
-                android:focusable="false"
                 android:clickable="true"
+                android:focusable="false"
                 android:hint="@string/DatePicker"
-                android:text="@={habit.startDate}"/>
+                android:inputType="date"
+                android:text="@={habit.startDate}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
+            android:id="@+id/txtEndDateLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            style="@style/TextinputLayout">
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideEnd"
+            app:layout_constraintStart_toEndOf="@+id/guideStart"
+            app:layout_constraintTop_toBottomOf="@+id/txtStartDateLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtEndDatePicker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="date"
-                android:focusable="false"
                 android:clickable="true"
+                android:focusable="false"
                 android:hint="@string/EndDatePicker"
-                android:text="@={habit.endDate}"/>
+                android:inputType="date"
+                android:text="@={habit.endDate}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
             android:id="@+id/CategorySpinner"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginTop="32dp"
             android:minHeight="48dp"
-            android:selectedItemPosition="@{habit.category.id}"/>
+            android:selectedItemPosition="@{habit.category.id}"
+            app:layout_constraintEnd_toStartOf="@+id/guideEnd"
+            app:layout_constraintStart_toEndOf="@+id/guideStart"
+            app:layout_constraintTop_toBottomOf="@+id/txtEndDateLayout" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:contentDescription="@string/addFAB"
+            android:focusable="true"
+            app:layout_constraintBottom_toTopOf="@+id/guideBottom"
+            app:layout_constraintEnd_toStartOf="@+id/guideEnd"
+            app:srcCompat="@drawable/ic_action_check" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/ic_action_check"
-                android:contentDescription="@string/addFAB"
-                android:backgroundTint="@color/primaryDarkColor"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
 
-    </LinearLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

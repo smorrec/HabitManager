@@ -9,6 +9,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +23,10 @@ import com.example.habitmanager.data.category.model.Category;
 import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.data.category.repository.CategoryRepository;
 import com.example.habitmanager.databinding.FragmentAddEditHabitBinding;
-import com.example.habitmanager.ui.utils.DatePickerFragment;
 import com.example.habitmanager.ui.base.BaseFragment;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.transition.MaterialContainerTransform;
 
 public class HabitManagerFragment extends BaseFragment {
     private FragmentAddEditHabitBinding binding;
@@ -92,11 +95,11 @@ public class HabitManagerFragment extends BaseFragment {
     }
 
     public void showDatePickerDialog(TextInputEditText editText) {
-        DatePickerFragment newFragment = DatePickerFragment.newInstance((datePicker, year, month, day) -> {
-            final String selectedDate = day + " / " + (month+1) + " / " + year;
-            editText.setText(selectedDate);
+        MaterialDatePicker picker = MaterialDatePicker.Builder.datePicker().build();
+        picker.addOnPositiveButtonClickListener(selection -> {
+            editText.setText(picker.getHeaderText());
         });
-        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+        picker.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
 
     private void showEdit(){

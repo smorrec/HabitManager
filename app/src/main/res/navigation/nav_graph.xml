@@ -14,6 +14,7 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/MainFragment"
+            app:launchSingleTop="true"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
@@ -38,11 +39,9 @@
             android:id="@+id/action_habitListFragment_to_habitViewFragment"
             app:destination="@id/habitViewFragment"/>
         <action
-            android:id="@+id/action_habitListFragment_to_aboutUsFragment"
-            app:destination="@id/aboutUsFragment" />
-        <action
             android:id="@+id/action_habitListFragment_to_habitManagerFragment"
-            app:destination="@id/habitManagerFragment" />
+            app:destination="@id/habitManagerFragment"
+            app:launchSingleTop="false" />
         <action
             android:id="@+id/action_habitListFragment_to_baseFragmentDialog"
             app:destination="@id/baseFragmentDialog" />
@@ -55,7 +54,7 @@
     <fragment
         android:id="@+id/aboutUsFragment"
         android:name="com.example.habitmanager.ui.AboutUsFragment"
-        android:label="fragment_about_us"
+        android:label="@string/AboutUs"
         tools:layout="@layout/fragment_about_us"/>
     <fragment
         android:id="@+id/habitManagerFragment"

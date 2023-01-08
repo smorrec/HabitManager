@@ -30,8 +30,7 @@ public class HabitListViewModel extends ViewModel {
         }
     }
 
-    public void delete(int position) {
-        Habit habit = HabitRepository.getInstance().getList().get(position);
+    public void delete(Habit habit) {
         HabitRepository.getInstance().deleteHabit(habit);
         undoEnabled = true;
         deletedHabit.setValue(habit);
@@ -47,6 +46,9 @@ public class HabitListViewModel extends ViewModel {
 
     public void undo() {
         HabitRepository.getInstance().undo(deletedHabit.getValue());
-        undoEnabled = false;
+    }
+
+    public void setUndoEnabled(boolean b) {
+        undoEnabled = b;
     }
 }

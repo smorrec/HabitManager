@@ -7,7 +7,7 @@ import com.example.habitmanager.data.category.model.Category;
 
 import java.util.Objects;
 
-public class Habit implements Parcelable {
+public class Habit implements Parcelable , Comparable<Habit>{
     public static final String KEY = "habit";
     private String name;
     private String description;
@@ -161,5 +161,10 @@ public class Habit implements Parcelable {
         parcel.writeString(endDate);
         parcel.writeInt(currentDaysCount);
         parcel.writeInt(completedDaysCount);
+    }
+
+    @Override
+    public int compareTo(Habit habit) {
+        return this.getName().compareToIgnoreCase(habit.getName());
     }
 }

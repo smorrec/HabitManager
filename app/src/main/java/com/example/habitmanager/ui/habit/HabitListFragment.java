@@ -1,17 +1,19 @@
 package com.example.habitmanager.ui.habit;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,15 +25,19 @@ import com.example.habitmanager.R;
 import com.example.habitmanager.adapter.HabitAdapter;
 import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.databinding.FragmentHabitListBinding;
-import com.example.habitmanager.ui.base.BaseFragmentDialog;
+import com.example.habitmanager.databinding.ModalBottomSheetBinding;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-public class HabitListFragment extends Fragment implements HabitAdapter.OnItemClickListener {
+public class HabitListFragment extends Fragment implements HabitAdapter.OnItemClickListener{
     private FragmentHabitListBinding binding;
-    private HabitAdapter adapter;
+    private static HabitAdapter adapter;
     private HabitListViewModel viewModel;
     public static final String TAG = "habitList";
-    private int selectedHabit = -1;
+    private static int selectedHabit = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,23 +57,6 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
         super.onViewCreated(view, savedInstanceState);
 
         binding.fab.setOnClickListener(view1 ->  habitManagerFragment(null));
-        binding.bottomAppBar.setOnMenuItemClickListener(menuItem ->{
-            switch (menuItem.getItemId()){
-                case R.id.btnEditHabit:
-                    habitManagerFragment(setBundle());
-                    return true;
-                case R.id.btnDeleteHabit:
-                    deleteHabit();
-                    return true;
-                case R.id.btnViewHabit:
-                    viewHabit();
-                    return true;
-            }
-            return false;
-        });
-
-        binding.bottomAppBar.setVisibility(View.INVISIBLE);
-        binding.bottomAppBar.performHide();
 
         initRvHabit();
         initViewModel();
@@ -80,13 +69,16 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
             case R.id.action_orderByCategory:
                 adapter.orderByCategory();
                 return true;
+            case R.id.action_orderByName:
+                adapter.orderByName();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        getActivity().getMenuInflater().inflate(R.menu.menu_main, menu);
+        getActivity().getMenuInflater().inflate(R.menu.menu_order, menu);
     }
 
     private void initRvHabit(){
@@ -127,6 +119,7 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
                             adapter.undo(habit);
                         })
                         .show();
+                viewModel.setUndoEnabled(false);
             }
         });
 
@@ -134,34 +127,28 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
     }
 
     private void habitManagerFragment(Bundle bundle){
-        NavHostFragment.findNavController(this)
-                .navigate(R.id.action_habitListFragment_to_habitManagerFragment, bundle);
-
+        NavHostFragment.findNavController(this).navigate(R.id.action_habitListFragment_to_habitManagerFragment, bundle);
     }
 
-    private void deleteHabit(){
-        Bundle bundle = new Bundle();
-        bundle.putString(BaseFragmentDialog.KEY_TITLE, getString(R.string.tittleDeleteHabit));
-        bundle.putString(BaseFragmentDialog.KEY_MESSAGE, getString(R.string.messageDeleteDependency, adapter.getItem(selectedHabit).getName()));
-        bundle.putString(BaseFragmentDialog.KEY_REQUEST, HabitListFragment.TAG);
-        NavHostFragment.findNavController(this).navigate(R.id.action_habitListFragment_to_baseFragmentDialog, bundle);
-        getActivity().getSupportFragmentManager().setFragmentResultListener(HabitListFragment.TAG, getViewLifecycleOwner(), (requestKey, result) -> {
-            if(result.getBoolean(BaseFragmentDialog.KEY_BUNDLE)){
-                viewModel.delete(selectedHabit);
-                adapter.deleteHabit(selectedHabit);
-                adapter.selectedPosition = -1;
-                binding.bottomAppBar.performHide();
-            }
-        });
+
+    protected void deleteHabit(){
+        new MaterialAlertDialogBuilder(getContext())
+                .setTitle(getString(R.string.tittleDeleteHabit))
+                .setMessage(getString(R.string.messageDeleteDependency, adapter.getItem(selectedHabit).getName()))
+                .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                })
+                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                    viewModel.delete(adapter.getItem(selectedHabit));
+                    adapter.deleteHabit(selectedHabit);
+                    adapter.selectedPosition = -1;
+                })
+                .show();
 
     }
 
     private void viewHabit(){
         NavHostFragment.findNavController(this).navigate(R.id.action_habitListFragment_to_habitViewFragment, setBundle());
-    }
-
-    private void showAboutUs(){
-        NavHostFragment.findNavController(this).navigate(R.id.action_habitListFragment_to_aboutUsFragment);
     }
 
     private Bundle setBundle(){
@@ -172,15 +159,15 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
     }
 
     @Override
-    public void onClick(View view, int position) {
+    public void onItemClick(View view, int position) {
         if(view.isSelected()){
-            binding.bottomAppBar.setVisibility(View.VISIBLE);
-            binding.bottomAppBar.performShow();
-        }else{
-            binding.bottomAppBar.performHide();
+            ModalBottomSheet modalBottomSheet = new ModalBottomSheet(this);
+            modalBottomSheet.show(getActivity().getSupportFragmentManager(), ModalBottomSheet.TAG);
         }
         selectedHabit = position;
     }
+
+
 
     @Override
     public void onResume() {
@@ -188,9 +175,53 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d("list", "onDestroy()");
+    public static class ModalBottomSheet extends BottomSheetDialogFragment{
+        private ModalBottomSheetBinding binding;
+        private HabitListFragment habitListFragment;
+        public static final String TAG = "modalBottomSheet";
+
+        public ModalBottomSheet(HabitListFragment habitListFragment){
+            this.habitListFragment = habitListFragment;
+        }
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+            BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
+
+            dialog.setOnShowListener(dialog1 -> {
+                ConstraintLayout bottomSheet = binding.standardBottomSheet;
+                BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_EXPANDED);
+            });
+
+
+            return dialog;
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            binding = ModalBottomSheetBinding.inflate(inflater, container, false);
+            binding.dragHandle.setOnClickListener(view -> dismiss());
+            binding.edit.setOnClickListener(view -> {
+                habitListFragment.habitManagerFragment(habitListFragment.setBundle());
+                dismiss();
+            });
+            binding.info.setOnClickListener(view -> {
+                habitListFragment.viewHabit();
+                dismiss();
+            });
+            binding.statics.setOnClickListener(view -> {
+                dismiss();
+            });
+            return binding.getRoot();
+        }
+
+        @Override
+        public void onDismiss(@NonNull DialogInterface dialog) {
+            super.onDismiss(dialog);
+            habitListFragment.adapter.selectedPosition = -1;
+            habitListFragment.adapter.notifyDataSetChanged();
+        }
     }
 }

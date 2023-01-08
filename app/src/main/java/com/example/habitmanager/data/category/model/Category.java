@@ -8,7 +8,6 @@ public class Category implements Comparable<Category>{
     private int picture;
 
     public Category(){
-
     }
 
     public Category(int id, String name, int picture) {

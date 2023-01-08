@@ -44,4 +44,13 @@
     <string name="AboutUs">Sobre Mí</string>
     <string name="Description">Descripción</string>
     <string name="undo">Deshacer</string>
+    <string name="orderByName">Ordenar por nombre</string>
+    <string name="add_transition">add_transition</string>
+    <string name="list">list</string>
+    <string name="editHabit">Editar</string>
+    <string name="viewHabit">Detalles</string>
+    <string name="monitorizeHabit">Monitorización</string>
+    <string name="homeMenu">Tareas</string>
+    <string name="listMenu">Hábitos</string>
+    <string name="listCompleted">Completados</string>
 </resources>

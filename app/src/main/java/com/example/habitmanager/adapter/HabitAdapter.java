@@ -41,7 +41,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
     public void deleteHabit(int position){
         deletedPosition = position;
         list.remove(position);
-        notifyDataSetChanged();
+        notifyItemRemoved(position);
     }
 
     public Habit getItem(int position){
@@ -50,6 +50,11 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
 
     public void orderByCategory(){
         Collections.sort(list, new HabitComparatorByCategory());
+        notifyDataSetChanged();
+    }
+
+    public void orderByName(){
+        Collections.sort(list);
         notifyDataSetChanged();
     }
 
@@ -162,24 +167,25 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
                 view.setSelected(true);
                 selectedPosition = getLayoutPosition();
             }
-            listener.onClick(view, getLayoutPosition());
+            listener.onItemClick(view, getLayoutPosition());
             notifyDataSetChanged();
         }
     }
 
     public interface OnItemClickListener{
-        void onClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     public void updateData(ArrayList<Habit> data){
         list.clear();
         list.addAll(data);
+        orderByName();
         selectedPosition = -1;
         notifyDataSetChanged();
     }
 
     public void undo(Habit habit) {
         list.add(deletedPosition, habit);
-        notifyDataSetChanged();
+        notifyItemInserted(deletedPosition);
     }
 }

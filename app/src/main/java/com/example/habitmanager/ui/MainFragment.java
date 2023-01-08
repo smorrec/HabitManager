@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -32,25 +33,18 @@ public class MainFragment extends Fragment implements CalendarAdapter.OnItemClic
     private LocalDate date;
 
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             date = LocalDate.now();
         }
+        getActivity().findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
         return binding.getRoot();
 
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.bottomAppBar.setNavigationIcon(null);
-        binding.fab.setOnClickListener(view2 -> showHabit());
-        binding.bottomAppBar.setOnMenuItemClickListener(menuItem ->{
-            return false;
-        });
     }
 
     @Override
@@ -82,10 +76,9 @@ public class MainFragment extends Fragment implements CalendarAdapter.OnItemClic
 
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 }

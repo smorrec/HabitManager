@@ -28,6 +28,8 @@ public class HabitViewFragment extends Fragment {
         binding = FragmentHabitViewBinding.inflate(inflater);
         binding.setHabit(getArguments().getParcelable(Habit.KEY));
         binding.fab.setOnClickListener(view -> goBack());
+        binding.categoryImageView.setImageResource(binding.getHabit().getCategory().getPicture());
+        binding.categoryTextView.setText(binding.getHabit().getCategory().getName());
         return binding.getRoot();
     }
 

@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/background_selector"
     android:orientation="horizontal"
-    android:layout_marginTop="10dp">
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
 
     <TextView
         android:id="@+id/textView"
@@ -17,7 +18,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/avatarImageView2"
         app:layout_constraintEnd_toStartOf="@id/descriptionnBtn"
         app:layout_constraintStart_toEndOf="@+id/avatarImageView2"
-        app:layout_constraintTop_toTopOf="@+id/avatarImageView2" />
+        app:layout_constraintTop_toTopOf="@+id/avatarImageView2"
+        android:textSize="17sp"/>
 
     <ImageView
         android:id="@+id/avatarImageView2"
@@ -48,11 +50,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Description" />
+            android:text="@string/Description"
+            android:textStyle="bold"
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/descriptionCotent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="13sp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

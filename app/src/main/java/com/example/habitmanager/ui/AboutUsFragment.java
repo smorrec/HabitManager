@@ -2,6 +2,7 @@ package com.example.habitmanager.ui;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -26,9 +27,9 @@ public class AboutUsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         AboutView view = AboutBuilder.with(getActivity())
-                .setName(R.string.name).setNameColor(R.color.secondaryDarkColor)
-                .setSubTitle(R.string.activity).setSubTitleColor(R.color.secondaryColor)
-                .setBrief(R.string.brief).setBriefColor(R.color.secondaryColor)
+                .setName(R.string.name)
+                .setSubTitle(R.string.activity)
+                .setBrief(R.string.brief)
                 .setAppIcon(R.mipmap.ic_launcher)
                 .setAppName(R.string.app_name)
                 .addGitHubLink(R.string.gitHub)
@@ -39,8 +40,14 @@ public class AboutUsFragment extends Fragment {
                 .setWrapScrollView(true)
                 .setLinksAnimated(true)
                 .setShowAsCard(true)
-                .setDividerColor(R.color.secondaryLightColor)
                 .build();
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 }
