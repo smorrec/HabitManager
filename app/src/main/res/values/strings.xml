@@ -53,4 +53,6 @@
     <string name="homeMenu">Tareas</string>
     <string name="listMenu">Hábitos</string>
     <string name="listCompleted">Completados</string>
+    <string name="deleteHabit">Eliminar</string>
+    <string name="completeHabit">Archivar</string>
 </resources>

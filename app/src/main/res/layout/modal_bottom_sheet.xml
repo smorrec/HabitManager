@@ -51,11 +51,67 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/info"
+            android:id="@+id/delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit">
+
+            <ImageView
+                android:id="@+id/optionDeleteIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_delete_forever"
+                app:layout_constraintStart_toStartOf="@id/delete"
+                app:layout_constraintTop_toTopOf="@id/delete"/>
+
+            <TextView
+                android:id="@+id/optionDeleteText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/deleteHabit"
+                app:layout_constraintTop_toTopOf="@id/optionDeleteIcon"
+                app:layout_constraintStart_toEndOf="@id/optionDeleteIcon"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/complete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/delete">
+
+            <ImageView
+                android:id="@+id/optionCompleteIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_complete"
+                app:layout_constraintStart_toStartOf="@id/complete"
+                app:layout_constraintTop_toTopOf="@id/complete" />
+
+            <TextView
+                android:id="@+id/optionCompleteText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/completeHabit"
+                app:layout_constraintTop_toTopOf="@id/optionCompleteIcon"
+                app:layout_constraintStart_toEndOf="@id/optionCompleteIcon"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/complete">
 
             <ImageView
                 android:id="@+id/optionDetailIcon"

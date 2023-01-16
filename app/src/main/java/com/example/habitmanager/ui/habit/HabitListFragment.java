@@ -207,6 +207,11 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
                 habitListFragment.habitManagerFragment(habitListFragment.setBundle());
                 dismiss();
             });
+            binding.delete.setOnClickListener(view -> {
+                habitListFragment.deleteHabit();
+                dismiss();
+            });
+            binding.complete.setOnClickListener(view -> dismiss());
             binding.info.setOnClickListener(view -> {
                 habitListFragment.viewHabit();
                 dismiss();
