@@ -51,6 +51,7 @@ public class SplashFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        getActivity().findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
     }
 
 }

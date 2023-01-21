@@ -1,16 +1,25 @@
 package com.example.habitmanager.ui.habit;
 
+import static com.example.habitmanager.ui.HabitManagerApplication.CHANNEL_ID;
+
+import android.Manifest;
+import android.app.PendingIntent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDeepLinkBuilder;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +32,10 @@ import com.example.habitmanager.data.category.model.Category;
 import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.data.category.repository.CategoryRepository;
 import com.example.habitmanager.databinding.FragmentAddEditHabitBinding;
+import com.example.habitmanager.preferencies.NotificationPreferencies;
 import com.example.habitmanager.ui.base.BaseFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.transition.MaterialContainerTransform;
 
 public class HabitManagerFragment extends BaseFragment {
     private FragmentAddEditHabitBinding binding;
@@ -61,20 +70,20 @@ public class HabitManagerFragment extends BaseFragment {
         binding.txtStartDatePicker.setOnClickListener(startDatePicker -> showDatePickerDialog(binding.txtStartDatePicker));
         binding.txtEndDatePicker.setOnClickListener(endDatePicker -> showDatePickerDialog(binding.txtEndDatePicker));
         binding.fab.setOnClickListener(fab -> viewModel.addHabit(binding.getHabit(),
-                (Category)binding.CategorySpinner.getSelectedItem()));
+                (Category) binding.CategorySpinner.getSelectedItem()));
         binding.txtHabitName.addTextChangedListener(new HabitTextWatcher(binding.txtHabitName));
         binding.txtStartDatePicker.addTextChangedListener(new HabitTextWatcher(binding.txtStartDatePicker));
 
-        if(getArguments() != null){
+        if (getArguments() != null) {
             showEdit();
         }
         initViewModel();
     }
 
-    private void initViewModel(){
+    private void initViewModel() {
         viewModel = new ViewModelProvider(this).get(HabitManagerViewModel.class);
         viewModel.getResultMutableLiveData().observe(getViewLifecycleOwner(), habitManagerResult -> {
-            switch (habitManagerResult){
+            switch (habitManagerResult) {
                 case NAMEEMPTY:
                     binding.txtHabitNameLayout.setError(getString(R.string.errorNameEmpty));
                     binding.txtHabitNameLayout.requestFocus();
@@ -89,13 +98,56 @@ public class HabitManagerFragment extends BaseFragment {
                     break;
                 case SUCCESS:
                     NavHostFragment.findNavController(this).navigateUp();
+                    if((new NotificationPreferencies(getContext()).isActive())){
+                        showAddNotification(binding.getHabit().getName());
+                    }
                     break;
             }
         });
     }
 
+
+    private void showAddNotification(String name) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Habit.KEY, binding.getHabit());
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            PendingIntent pendingIntent = new NavDeepLinkBuilder(getContext())
+                    .setGraph(R.navigation.nav_graph)
+                    .setDestination(R.id.habitListFragment)
+                    .setArguments(bundle)
+                    .createPendingIntent();
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
+                    .setSmallIcon(R.drawable.splashicon)
+                    .setContentTitle(getString(R.string.addHabitNotTitle))
+                    .setContentText(getString(R.string.addHabitNotTxt, name))
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
+
+            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            }
+            notificationManagerCompat.notify(0, builder.build());
+
+        }
+
+    }
+
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    showAddNotification(binding.getHabit().getName());
+                } else {
+
+                }
+            });
+
     public void showDatePickerDialog(TextInputEditText editText) {
-        MaterialDatePicker picker = MaterialDatePicker.Builder.datePicker().build();
+        MaterialDatePicker<Long> picker = MaterialDatePicker.Builder.datePicker().build();
         picker.addOnPositiveButtonClickListener(selection -> {
             editText.setText(picker.getHeaderText());
         });

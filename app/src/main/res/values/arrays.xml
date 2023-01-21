@@ -1,0 +1,11 @@
+<resources>
+    <string-array name="ringtone_entries">
+        <item>Maluma time</item>
+        <item>Despechá de Rosalia</item>
+    </string-array>
+
+    <string-array name="ringtone_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>

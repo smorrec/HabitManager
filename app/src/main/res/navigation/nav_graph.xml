@@ -64,4 +64,8 @@
         android:id="@+id/baseFragmentDialog"
         android:name="com.example.habitmanager.ui.base.BaseFragmentDialog"
         android:label="@string/AboutUs" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.habitmanager.preferencies.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

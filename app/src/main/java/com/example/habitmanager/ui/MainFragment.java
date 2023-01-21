@@ -53,14 +53,6 @@ public class MainFragment extends Fragment implements CalendarAdapter.OnItemClic
         binding = null;
     }
 
-    private void showHabit(){
-        NavHostFragment.findNavController(this).navigate(R.id.action_MainFragment_to_habitListFragment);
-    }
-
-    private void showAboutUs(){
-        NavHostFragment.findNavController(this).navigate(R.id.action_MainFragment_to_aboutUsFragment);
-    }
-
     private void initRvHabit(){
         adapter = new CalendarAdapter(this);
 
@@ -80,5 +72,6 @@ public class MainFragment extends Fragment implements CalendarAdapter.OnItemClic
     public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        getActivity().findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
     }
 }
