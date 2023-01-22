@@ -1,7 +1,10 @@
 package com.example.habitmanager.preferencies;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +15,8 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import com.example.habitmanager.R;
 
+import java.util.Locale;
+
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
@@ -19,6 +24,24 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
         initPreferenciesNotification();
         initPreferenciesTheme();
+        initPreferenciesList();
+        initPreferenciesLanguage();
+    }
+    //Falta implementar
+    private void initPreferenciesLanguage() {
+        Preference listPreference = getPreferenceManager().findPreference(getString(R.string.key_language));
+        listPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            (new LanguagePreferencies(getContext())).setLanguage((String) newValue);
+            return true;
+        });
+    }
+
+    private void initPreferenciesList() {
+        Preference listPreference = getPreferenceManager().findPreference(getString(R.string.key_list));
+        listPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            (new ListPreferencies(getContext())).setOrder((String) newValue);
+            return true;
+        });
     }
 
     private void initPreferenciesTheme() {

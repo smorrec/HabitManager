@@ -3,12 +3,17 @@ package com.example.habitmanager.ui;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.habitmanager.R;
+import com.example.habitmanager.preferencies.LanguagePreferencies;
 import com.example.habitmanager.preferencies.ThemePreferencies;
+
+import java.util.Locale;
 
 public class HabitManagerApplication extends Application {
     public static final String CHANNEL_ID = "id";
@@ -18,6 +23,7 @@ public class HabitManagerApplication extends Application {
         super.onCreate();
         createNotificationChannel();
         initTheme();
+        initLanguage();
     }
 
     /**
@@ -33,7 +39,6 @@ public class HabitManagerApplication extends Application {
             channel.setDescription(description);
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
-
         }
     }
 
@@ -44,5 +49,17 @@ public class HabitManagerApplication extends Application {
         }else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+    }
+
+    private void initLanguage(){
+        //LanguagePreferencies languagePreferencies = new LanguagePreferencies(this);
+        //Locale locale = new Locale(languagePreferencies.getLanguage());
+        Locale locale = new Locale("en");
+        Locale.setDefault(locale);
+        Resources resources = getApplicationContext().getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        getApplicationContext().createConfigurationContext(config);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }

@@ -17,16 +17,42 @@
         </SwitchPreferenceCompat>
     </PreferenceCategory>
 
-    <SwitchPreferenceCompat
-        android:icon="@drawable/ic_night"
-        android:key="@string/key_night"
-        android:title="@string/night_mode"
-        android:defaultValue="true"/>
+    <PreferenceCategory
+        android:title="@string/list_header">
+        <ListPreference
+            android:key="@string/key_list"
+            android:title="@string/listSetting"
+            android:entries="@array/list_entries"
+            android:entryValues="@array/list_values">
+        </ListPreference>
+    </PreferenceCategory>
 
-    <Preference
-        android:fragment="com.example.habitmanager.ui.LicenseFragment"
-        android:icon="@drawable/ic_info"
-        android:key="@string/key_license"
-        android:title="@string/title_license"/>
+    <PreferenceCategory
+        android:title="@string/language_header">
+        <ListPreference
+            android:key="@string/key_language"
+            android:title="@string/languageSetting"
+            android:entries="@array/language_entries"
+            android:entryValues="@array/language_values">
+        </ListPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/theme_header">
+        <SwitchPreferenceCompat
+            android:icon="@drawable/ic_night"
+            android:key="@string/key_night"
+            android:title="@string/night_mode"
+            android:defaultValue="false"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory>
+        <Preference
+            android:fragment="com.example.habitmanager.ui.LicenseFragment"
+            android:icon="@drawable/ic_info"
+            android:key="@string/key_license"
+            android:title="@string/title_license"/>
+    </PreferenceCategory>
+
 
 </PreferenceScreen>

@@ -7,13 +7,13 @@
         android:id="@+id/action_orderByName"
         android:title="@string/orderByName"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_order_name"
+        android:icon="@drawable/ic_sort_name"
         />
 
     <item
         android:id="@+id/action_orderByCategory"
         android:title="@string/orderByCategory"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_order"
+        android:icon="@drawable/ic_sort_category"
         />
 </menu>

@@ -23,12 +23,6 @@
         android:name="com.example.habitmanager.ui.MainFragment"
         android:label="@string/main_fragment_label"
         tools:layout="@layout/fragment_main">
-        <action
-            android:id="@+id/action_MainFragment_to_habitListFragment"
-            app:destination="@id/habitListFragment" />
-        <action
-            android:id="@+id/action_MainFragment_to_aboutUsFragment"
-            app:destination="@id/aboutUsFragment" />
     </fragment>
     <fragment
         android:id="@+id/habitListFragment"
@@ -42,9 +36,6 @@
             android:id="@+id/action_habitListFragment_to_habitManagerFragment"
             app:destination="@id/habitManagerFragment"
             app:launchSingleTop="false" />
-        <action
-            android:id="@+id/action_habitListFragment_to_baseFragmentDialog"
-            app:destination="@id/baseFragmentDialog" />
     </fragment>
     <fragment
         android:id="@+id/habitViewFragment"
@@ -60,12 +51,8 @@
         android:id="@+id/habitManagerFragment"
         android:name="com.example.habitmanager.ui.habit.HabitManagerFragment"
         android:label="@string/HabitManager" />
-    <dialog
-        android:id="@+id/baseFragmentDialog"
-        android:name="com.example.habitmanager.ui.base.BaseFragmentDialog"
-        android:label="@string/AboutUs" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.habitmanager.preferencies.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="@string/settings_label"/>
 </navigation>

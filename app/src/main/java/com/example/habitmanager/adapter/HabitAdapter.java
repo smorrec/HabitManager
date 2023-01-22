@@ -2,6 +2,8 @@ package com.example.habitmanager.adapter;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionManager;
@@ -13,6 +15,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habitmanager.R;
@@ -82,7 +86,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
 
     private void hideDescription(ViewHolder holder){
         holder.binding.description.setVisibility(View.GONE);
-        holder.binding.descriptionnBtn.setImageResource(R.drawable.ic_arrow_down);
+        holder.binding.descriptionnBtn.setImageResource(R.drawable.ic_expand);
         holder.binding.descriptionnBtn.setOnClickListener(view -> {
             holder.binding.description.setVisibility(View.VISIBLE);
             AlphaAnimation animation = new AlphaAnimation(0, 1.0f);
@@ -108,7 +112,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
 
     private void showDescription(ViewHolder holder){
         holder.binding.description.setVisibility(View.VISIBLE);
-        holder.binding.descriptionnBtn.setImageResource(R.drawable.ic_arrow_up);
+        holder.binding.descriptionnBtn.setImageResource(R.drawable.ic_hide);
         holder.binding.descriptionnBtn.setOnClickListener(view -> {
             AlphaAnimation animation = new AlphaAnimation(1.0f, 0);
             animation.setDuration(500);

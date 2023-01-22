@@ -43,7 +43,7 @@ public class LicenseFragment extends Fragment {
                 content = binding.contentAbout;
         }
         content.setVisibility(View.GONE);
-        btn.setImageResource(R.drawable.ic_arrow_down);
+        btn.setImageResource(R.drawable.ic_expand);
         btn.setOnClickListener(this::showDescription);
     }
 
@@ -58,7 +58,7 @@ public class LicenseFragment extends Fragment {
                 content = binding.contentAbout;
         }
         content.setVisibility(View.VISIBLE);
-        btn.setImageResource(R.drawable.ic_arrow_up);
+        btn.setImageResource(R.drawable.ic_hide);
         btn.setOnClickListener(this::hideDescription);
     }
 }

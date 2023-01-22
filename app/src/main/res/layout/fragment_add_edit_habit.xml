@@ -119,7 +119,7 @@
             android:focusable="true"
             app:layout_constraintBottom_toTopOf="@+id/guideBottom"
             app:layout_constraintEnd_toStartOf="@+id/guideEnd"
-            app:srcCompat="@drawable/ic_action_check" />
+            app:srcCompat="@drawable/ic_done" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideStart"

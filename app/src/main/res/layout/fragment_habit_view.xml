@@ -217,7 +217,7 @@
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_action_back" />
+            app:srcCompat="@drawable/ic_back" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineStart"

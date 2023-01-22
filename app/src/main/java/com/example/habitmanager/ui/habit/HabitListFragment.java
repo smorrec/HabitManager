@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +27,7 @@ import com.example.habitmanager.adapter.HabitAdapter;
 import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.databinding.FragmentHabitListBinding;
 import com.example.habitmanager.databinding.ModalBottomSheetBinding;
+import com.example.habitmanager.preferencies.ListPreferencies;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -38,6 +40,7 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
     private HabitListViewModel viewModel;
     public static final String TAG = "habitList";
     private static int selectedHabit = -1;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,7 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
                     break;
                 case SUCCESS:
                     adapter.updateData(arrayListStateDataList.getData());
+                    sortList();
                     arrayListStateDataList.setCompleted();
                     break;
                 case COMPLETED:
@@ -124,6 +128,14 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
         });
 
         viewModel.getDataList();
+    }
+
+    private void sortList() {
+        if((new ListPreferencies(getContext())).getOrder().equals("1") || (new ListPreferencies(getContext())).getOrder().isEmpty()){
+            adapter.orderByName();
+        }else {
+            adapter.orderByCategory();
+        }
     }
 
     private void habitManagerFragment(Bundle bundle){

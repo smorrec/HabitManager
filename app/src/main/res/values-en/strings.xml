@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="splash_fragment_label">Splash Fragment</string>
-    <string name="main_fragment_label">Main Fragment</string>
+    <string name="main_fragment_label">Tasks</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
@@ -42,4 +42,44 @@
     <string name="HabitView">Details</string>
     <string name="HabitManager">Add/Edit Habit</string>
     <string name="AboutUs">About Me</string>
+
+    <string name="Description">Description</string>
+    <string name="undo">Undo</string>
+    <string name="orderByName">Order by name</string>
+    <string name="add_transition">add_transition</string>
+    <string name="list">list</string>
+    <string name="editHabit">Edit</string>
+    <string name="viewHabit">Detail</string>
+    <string name="monitorizeHabit">Motorization</string>
+    <string name="homeMenu">Task</string>
+    <string name="listMenu">Habits</string>
+    <string name="listCompleted">Completed</string>
+    <string name="deleteHabit">Delete</string>
+    <string name="completeHabit">Complete</string>
+    <string name="label_items">Other</string>
+    <string name="main_items">Navegation</string>
+    <string name="action_Profile">Profile</string>
+    <string name="channel_name">CrearHabitoCh</string>
+    <string name="account_header">Account</string>
+    <string name="key_email">key_email</string>
+    <string name="title_email">Email</string>
+    <string name="key_password">key_password</string>
+    <string name="title_password">Password</string>
+    <string name="key_account">key_account</string>
+    <string name="title_account">Account</string>
+    <string name="summary_account">Modify Account</string>
+    <string name="notification_header">Notifications</string>
+    <string name="activate_notification">Activate notifications</string>
+    <string name="key_activate_notification">key_active_notification</string>
+    <string name="mpachart_license">Copyright 2020 Philipp Jahoda Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="about_license">MIT License  Copyright © 2016   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.  THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</string>
+    <string name="MPAndroidChart">MPAndroidChart</string>
+    <string name="MaterialAbout">MaterialAbout</string>
+    <string name="key_license">key_license</string>
+    <string name="title_license">Licenses</string>
+    <string name="key_night">key_night</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="addHabitNotTitle">New Habit added</string>
+    <string name="addHabitNotTxt">Habit %1$s has been added</string>
+    <string name="settings_label">Settings</string>
 </resources>
