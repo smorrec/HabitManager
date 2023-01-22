@@ -1,15 +1,26 @@
 package com.example.habitmanager.ui.habit;
 
+import static com.example.habitmanager.ui.HabitManagerApplication.CHANNEL_ID;
+
+import android.Manifest;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDeepLinkBuilder;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -151,13 +162,43 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
                     dialogInterface.dismiss();
                 })
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                    showDeletedNotification(adapter.getItem(selectedHabit).getName());
                     viewModel.delete(adapter.getItem(selectedHabit));
                     adapter.deleteHabit(selectedHabit);
                     adapter.selectedPosition = -1;
+
                 })
                 .show();
 
     }
+
+    private void showDeletedNotification(String name) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
+                        .setSmallIcon(R.drawable.splashicon)
+                        .setContentTitle(getString(R.string.delHabitNotTitle))
+                        .setContentText(getString(R.string.delHabitNotTxt, name))
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setAutoCancel(true);
+
+                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getContext());
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+                }
+                notificationManagerCompat.notify(0, builder.build());
+
+            }
+    }
+
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    showDeletedNotification(adapter.getItem(selectedHabit).getName());
+                } else {
+
+                }
+            });
 
     private void viewHabit(){
         NavHostFragment.findNavController(this).navigate(R.id.action_habitListFragment_to_habitViewFragment, setBundle());

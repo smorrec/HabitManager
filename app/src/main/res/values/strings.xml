@@ -94,4 +94,6 @@
     <string name="languageSetting">Idioma de la aplicación</string>
     <string name="sp">Español</string>
     <string name="en">Inglés</string>
+    <string name="delHabitNotTitle">Hábito eliminado</string>
+    <string name="delHabitNotTxt">"Ha eliminado el hábito %1$s"</string>
 </resources>
