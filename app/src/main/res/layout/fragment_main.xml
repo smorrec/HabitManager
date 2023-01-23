@@ -1,89 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainFragment"
-    android:id="@+id/MainFragment">
-
-    <LinearLayout
-        android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.MainFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:orientation="vertical">
-        
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".ui.MainFragment"
+        android:id="@+id/MainFragment">
 
-            <Button
-                android:id="@+id/previousDay"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/calendarBack"
-                android:background="@android:color/transparent"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:id="@+id/monthYear"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:text="@string/monthYear"
-                />
-
-            <Button
-                android:id="@+id/nextDay"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/frontBack"
-                android:background="@android:color/transparent"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/dayOfWeek"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dayOfWeek"
-                android:textAlignment="center"
-                android:textSize="16sp"/>
-
-
-        </LinearLayout>
-        
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/calendarRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
+            android:id="@+id/calendarList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="EN CONSTRUCCION"
-            android:textSize="50sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
+            tools:listitem="@layout/calendar_item"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/taskList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_habit"
+            app:layout_constraintTop_toBottomOf="@id/calendarList"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

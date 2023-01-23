@@ -27,9 +27,10 @@ import com.example.habitmanager.databinding.FragmentMainBinding;
 
 import java.time.LocalDate;
 
-public class MainFragment extends Fragment implements CalendarAdapter.OnItemClickListener{
+public class MainFragment extends Fragment implements CalendarAdapter.OnItemClickListener, HabitAdapter.OnItemClickListener{
     private FragmentMainBinding binding;
-    private CalendarAdapter adapter;
+    private CalendarAdapter calendarAdapter;
+    private HabitAdapter habitAdapter;
     private LocalDate date;
 
     @Override
@@ -38,6 +39,8 @@ public class MainFragment extends Fragment implements CalendarAdapter.OnItemClic
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             date = LocalDate.now();
         }
+        initRvCalendar();
+        initRvTasks();
         getActivity().findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
         return binding.getRoot();
 
@@ -53,14 +56,21 @@ public class MainFragment extends Fragment implements CalendarAdapter.OnItemClic
         binding = null;
     }
 
-    private void initRvHabit(){
-        adapter = new CalendarAdapter(this);
+    private void initRvCalendar(){
+        calendarAdapter = new CalendarAdapter(this);
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
+
+        binding.calendarList.setLayoutManager(linearLayoutManager);
+
+        binding.calendarList.setAdapter(calendarAdapter);
+    }
+
+    private void initRvTasks(){
+        habitAdapter = new HabitAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-
-        binding.calendarRecyclerView.setLayoutManager(linearLayoutManager);
-
-        binding.calendarRecyclerView.setAdapter(adapter);
+        binding.taskList.setLayoutManager(linearLayoutManager);
+        binding.taskList.setAdapter(habitAdapter);
     }
 
     @Override
@@ -73,5 +83,10 @@ public class MainFragment extends Fragment implements CalendarAdapter.OnItemClic
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         getActivity().findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
     }
 }
