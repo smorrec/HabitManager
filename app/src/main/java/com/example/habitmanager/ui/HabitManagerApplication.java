@@ -3,6 +3,7 @@ package com.example.habitmanager.ui;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
@@ -17,13 +18,19 @@ import java.util.Locale;
 
 public class HabitManagerApplication extends Application {
     public static final String CHANNEL_ID = "id";
+    private static Context context;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        context = this;
         createNotificationChannel();
         initTheme();
         initLanguage();
+    }
+
+    public static Context getContext(){
+        return context;
     }
 
     /**
@@ -52,9 +59,8 @@ public class HabitManagerApplication extends Application {
     }
 
     private void initLanguage(){
-        //LanguagePreferencies languagePreferencies = new LanguagePreferencies(this);
-        //Locale locale = new Locale(languagePreferencies.getLanguage());
-        Locale locale = new Locale("en");
+        LanguagePreferencies languagePreferencies = new LanguagePreferencies(this);
+        Locale locale = new Locale(languagePreferencies.getLanguage());
         Locale.setDefault(locale);
         Resources resources = getApplicationContext().getResources();
         Configuration config = resources.getConfiguration();

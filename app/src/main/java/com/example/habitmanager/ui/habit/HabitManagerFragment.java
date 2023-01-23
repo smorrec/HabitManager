@@ -146,13 +146,6 @@ public class HabitManagerFragment extends BaseFragment {
                 }
             });
 
-    public void showDatePickerDialog(TextInputEditText editText) {
-        MaterialDatePicker<Long> picker = MaterialDatePicker.Builder.datePicker().build();
-        picker.addOnPositiveButtonClickListener(selection -> {
-            editText.setText(picker.getHeaderText());
-        });
-        picker.show(getActivity().getSupportFragmentManager(), "datePicker");
-    }
 
     private void showEdit(){
         Habit habit = getArguments().getParcelable(Habit.KEY);

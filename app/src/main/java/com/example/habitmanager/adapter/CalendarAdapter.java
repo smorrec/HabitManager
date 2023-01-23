@@ -7,20 +7,23 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.habitmanager.data.calendar.model.CalendarObject;
+import com.example.habitmanager.data.calendar.repository.CalendarRepository;
 import com.example.habitmanager.data.habit.repository.HabitRepository;
 import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.databinding.CalendarItemBinding;
 import com.example.habitmanager.databinding.ItemHabitBinding;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder>{
     public int selectedPosition = -1;
     private CalendarAdapter.OnItemClickListener listener;
-    private ArrayList<Habit> list;
+    private ArrayList<CalendarObject> list;
 
     public CalendarAdapter(CalendarAdapter.OnItemClickListener listener) {
-        this.list = HabitRepository.getInstance().getList();
+        this.list = CalendarRepository.getInstance().getList();
         this.listener = listener;
     }
 
@@ -34,12 +37,25 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull CalendarAdapter.ViewHolder holder, int position) {
+        holder.binding.weekDayName.setText(list.get(position).getWeekDay());
+        holder.binding.weekDatValue.setText(String.valueOf(list.get(position).getDay()));
         holder.binding.getRoot().setSelected(position == selectedPosition);
     }
 
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public boolean selectDay(Calendar calendar) {
+        boolean success = false;
+        CalendarObject calendarObject = new CalendarObject(calendar);
+        if(list.contains(calendarObject)){
+            selectedPosition = list.indexOf(calendarObject);
+            success = true;
+            notifyDataSetChanged();
+        }
+        return success;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

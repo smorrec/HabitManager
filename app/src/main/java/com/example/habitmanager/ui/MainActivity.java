@@ -68,35 +68,11 @@ public class MainActivity extends AppCompatActivity {
                 .setOpenableLayout(binding.drawer).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        binding.bottomNavigation.setOnItemSelectedListener(item -> {
-            NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.nav_graph, true).build();
-            switch (item.getItemId()){
-                case R.id.homeMenu:
-                    Navigation.findNavController(this,  R.id.nav_host_fragment_content_main).navigate(R.id.MainFragment, null, navOptions);
-                    return true;
-                case R.id.listMenu:
-                    Navigation.findNavController(this,  R.id.nav_host_fragment_content_main).navigate(R.id.habitListFragment, null, navOptions);
-                    return true;
-                case R.id.completedMenu:
-                    return true;
-            }
-            return false;
-        });
+        setUpBottomNavigationView();
 
         placeHolderUserPref();
 
-        pickMedia = registerForActivityResult(new PickVisualMedia(), uri -> {
-                    if(uri != null){
-                        View headerView = binding.navigationView.getHeaderView(0);
-                        Bitmap image = null;
-                        try {
-                            image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        ((ImageView)headerView.findViewById(R.id.user_image)).setImageBitmap(image);
-                    }
-                });
+        setUpPickMedia();
 
         setUpNavigationView();
 
@@ -114,6 +90,21 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+
+    private void setUpPickMedia(){
+        pickMedia = registerForActivityResult(new PickVisualMedia(), uri -> {
+            if(uri != null){
+                View headerView = binding.navigationView.getHeaderView(0);
+                Bitmap image = null;
+                try {
+                    image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ((ImageView)headerView.findViewById(R.id.user_image)).setImageBitmap(image);
+            }
+        });
+    }
 
     private void placeHolderUserPref(){
         userPrefManager = new UserPrefManager(this);
@@ -137,6 +128,23 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setUpBottomNavigationView(){
+        binding.bottomNavigation.setOnItemSelectedListener(item -> {
+            NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.nav_graph, true).build();
+            switch (item.getItemId()){
+                case R.id.homeMenu:
+                    Navigation.findNavController(this,  R.id.nav_host_fragment_content_main).navigate(R.id.MainFragment, null, navOptions);
+                    return true;
+                case R.id.listMenu:
+                    Navigation.findNavController(this,  R.id.nav_host_fragment_content_main).navigate(R.id.habitListFragment, null, navOptions);
+                    return true;
+                case R.id.completedMenu:
+                    return true;
+            }
+            return false;
+        });
     }
 
     private void setUpNavigationView() {

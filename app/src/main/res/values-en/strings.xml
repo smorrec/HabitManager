@@ -82,4 +82,18 @@
     <string name="addHabitNotTitle">New Habit added</string>
     <string name="addHabitNotTxt">Habit %1$s has been added</string>
     <string name="settings_label">Settings</string>
+    <string name="list_header">List</string>
+    <string name="key_list">key_list</string>
+    <string name="listSetting">Sort criteria</string>
+    <string name="sortName">Name</string>
+    <string name="sortCategory">Category</string>
+    <string name="theme_header">Theme</string>
+    <string name="language_header">Language</string>
+    <string name="key_language">key_language</string>
+    <string name="languageSetting">Application language</string>
+    <string name="sp">Spanish</string>
+    <string name="en">English</string>
+    <string name="delHabitNotTitle">Habit Deleted</string>
+    <string name="delHabitNotTxt">"Habit %1$s has been deleted"</string>
+    <string name="undoText">Undo delete</string>
 </resources>

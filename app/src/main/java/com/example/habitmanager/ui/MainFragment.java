@@ -2,21 +2,17 @@ package com.example.habitmanager.ui;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.FragmentNavigator;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,25 +20,59 @@ import com.example.habitmanager.R;
 import com.example.habitmanager.adapter.CalendarAdapter;
 import com.example.habitmanager.adapter.HabitAdapter;
 import com.example.habitmanager.databinding.FragmentMainBinding;
+import com.example.habitmanager.ui.base.BaseFragment;
+import com.google.android.material.datepicker.MaterialDatePicker;
 
 import java.time.LocalDate;
+import java.util.Calendar;
 
-public class MainFragment extends Fragment implements CalendarAdapter.OnItemClickListener, HabitAdapter.OnItemClickListener{
+public class MainFragment extends BaseFragment implements CalendarAdapter.OnItemClickListener, HabitAdapter.OnItemClickListener{
     private FragmentMainBinding binding;
     private CalendarAdapter calendarAdapter;
     private HabitAdapter habitAdapter;
-    private LocalDate date;
+    private LinearLayoutManager linearLayoutManager;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            date = LocalDate.now();
-        }
         initRvCalendar();
         initRvTasks();
         getActivity().findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
         return binding.getRoot();
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.menu_calendar, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_selectDay:
+                selectCalendar();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void selectCalendar() {
+        MaterialDatePicker<Long> picker = MaterialDatePicker.Builder.datePicker().build();
+        picker.addOnPositiveButtonClickListener(selection -> {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(selection);
+            if(calendarAdapter.selectDay(calendar)) {
+                linearLayoutManager.scrollToPositionWithOffset(calendarAdapter.selectedPosition, binding.MainFragment.getWidth()/2);
+            }
+        });
+        picker.show(getActivity().getSupportFragmentManager(), "datePicker");
 
     }
 
@@ -59,7 +89,7 @@ public class MainFragment extends Fragment implements CalendarAdapter.OnItemClic
     private void initRvCalendar(){
         calendarAdapter = new CalendarAdapter(this);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
+        linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
 
         binding.calendarList.setLayoutManager(linearLayoutManager);
 

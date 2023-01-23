@@ -128,7 +128,7 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
 
         viewModel.getDeletedHabit().observe(getViewLifecycleOwner(), habit -> {
             if(viewModel.isUndoEnabled()) {
-                Snackbar.make(getView(), "Deshacer eliminar " + habit.getName(), Snackbar.LENGTH_SHORT)
+                Snackbar.make(getView(), getString(R.string.undoText) + habit.getName(), Snackbar.LENGTH_SHORT)
                         .setAction(R.string.undo, view -> {
                             viewModel.undo();
                             adapter.undo(habit);
