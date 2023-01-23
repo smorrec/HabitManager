@@ -53,7 +53,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-            int lastSelected = selectedPosition;
             if(view.isSelected()){
                 view.setSelected(false);
                 selectedPosition = -1;
@@ -63,7 +62,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                 selectedPosition = getLayoutPosition();
             }
             listener.onClick(view, getLayoutPosition());
-            notifyItemChanged(lastSelected);
+            notifyDataSetChanged();
 
         }
     }
