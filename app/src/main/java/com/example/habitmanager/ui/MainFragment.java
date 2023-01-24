@@ -1,5 +1,6 @@
 package com.example.habitmanager.ui;
 
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -69,7 +70,7 @@ public class MainFragment extends BaseFragment implements CalendarAdapter.OnItem
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(selection);
             if(calendarAdapter.selectDay(calendar)) {
-                linearLayoutManager.scrollToPositionWithOffset(calendarAdapter.selectedPosition, binding.MainFragment.getWidth()/2);
+                linearLayoutManager.scrollToPositionWithOffset(calendarAdapter.selectedPosition, (int) getResources().getDimension(R.dimen.offset));
             }
         });
         picker.show(getActivity().getSupportFragmentManager(), "datePicker");

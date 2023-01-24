@@ -10,11 +10,11 @@
 
     <TextView
         android:id="@+id/weekDayName"
-        android:layout_width="wrap_content"
+        android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:background="@drawable/background_selector_calendar_name"
-        android:text="Mon"
         android:textSize="15sp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +23,7 @@
         android:id="@+id/weekDatValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1"
+        android:textAlignment="center"
         android:textSize="21sp"
         app:layout_constraintEnd_toEndOf="@id/weekDayName"
         app:layout_constraintStart_toStartOf="@id/weekDayName"
