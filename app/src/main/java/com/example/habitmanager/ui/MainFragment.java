@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.habitmanager.R;
 import com.example.habitmanager.adapter.CalendarAdapter;
 import com.example.habitmanager.adapter.HabitAdapter;
+import com.example.habitmanager.adapter.TasksAdapter;
 import com.example.habitmanager.databinding.FragmentMainBinding;
 import com.example.habitmanager.ui.base.BaseFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -30,7 +31,7 @@ import java.util.Calendar;
 public class MainFragment extends BaseFragment implements CalendarAdapter.OnItemClickListener, HabitAdapter.OnItemClickListener{
     private FragmentMainBinding binding;
     private CalendarAdapter calendarAdapter;
-    private HabitAdapter habitAdapter;
+    private TasksAdapter tasksAdapter;
     private LinearLayoutManager linearLayoutManager;
 
     @Override
@@ -98,10 +99,10 @@ public class MainFragment extends BaseFragment implements CalendarAdapter.OnItem
     }
 
     private void initRvTasks(){
-        habitAdapter = new HabitAdapter(this);
+        tasksAdapter = new TasksAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         binding.taskList.setLayoutManager(linearLayoutManager);
-        binding.taskList.setAdapter(habitAdapter);
+        binding.taskList.setAdapter(tasksAdapter);
     }
 
     @Override
