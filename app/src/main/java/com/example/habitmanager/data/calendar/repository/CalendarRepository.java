@@ -13,6 +13,10 @@ public class CalendarRepository {
     private ArrayList<CalendarObject> list;
     private static CalendarRepository instance;
 
+    private CalendarRepository(){
+        inicialize();
+    }
+
     public static CalendarRepository getInstance(){
         if(instance == null){
             instance = new CalendarRepository();
@@ -21,6 +25,10 @@ public class CalendarRepository {
     }
 
     public ArrayList<CalendarObject> getList(){
+        return list;
+    }
+
+    private void inicialize(){
         list = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         Date curDate = new Date();
@@ -30,7 +38,6 @@ public class CalendarRepository {
             calendar.add(Calendar.DATE, 1);
             list.add(new CalendarObject(calendar));
         }
-        return list;
     }
 
 }

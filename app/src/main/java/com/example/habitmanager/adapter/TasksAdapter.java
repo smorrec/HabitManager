@@ -8,16 +8,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habitmanager.data.calendar.model.CalendarObject;
-import com.example.habitmanager.data.calendar.repository.CalendarRepository;
+import com.example.habitmanager.data.task.model.HabitTask;
+import com.example.habitmanager.data.task.repository.HabitTaskRepository;
 import com.example.habitmanager.databinding.ItemTaskBinding;
 
 import java.util.ArrayList;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
-    private ArrayList<CalendarObject> list;
+    private ArrayList<HabitTask> list;
+    private CalendarObject selectedCalendar;
 
     public TasksAdapter() {
-        this.list = CalendarRepository.getInstance().getList();
+        this.list = HabitTaskRepository.getInstance().getList();
     }
 
     @NonNull
