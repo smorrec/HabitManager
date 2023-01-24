@@ -28,7 +28,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import java.time.LocalDate;
 import java.util.Calendar;
 
-public class MainFragment extends BaseFragment implements CalendarAdapter.OnItemClickListener, HabitAdapter.OnItemClickListener{
+public class MainFragment extends BaseFragment implements CalendarAdapter.OnItemClickListener{
     private FragmentMainBinding binding;
     private CalendarAdapter calendarAdapter;
     private TasksAdapter tasksAdapter;
@@ -107,7 +107,8 @@ public class MainFragment extends BaseFragment implements CalendarAdapter.OnItem
 
     @Override
     public void onClick(View view, int position) {
-
+        tasksAdapter.setSelectedCalendar(calendarAdapter.getItem(position));
+        binding.taskList.startLayoutAnimation();
     }
 
     @Override
@@ -117,8 +118,4 @@ public class MainFragment extends BaseFragment implements CalendarAdapter.OnItem
         getActivity().findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-
-    }
 }

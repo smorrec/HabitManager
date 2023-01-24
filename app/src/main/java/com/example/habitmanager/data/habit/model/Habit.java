@@ -3,26 +3,31 @@ package com.example.habitmanager.data.habit.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.habitmanager.data.calendar.model.CalendarObject;
 import com.example.habitmanager.data.category.model.Category;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 public class Habit implements Parcelable , Comparable<Habit>{
     public static final String KEY = "habit";
     private String name;
     private String description;
-    private String startDate;
-    private String endDate;
+    private Calendar startDate;
+    private String startDateString;
+    private Calendar endDate;
+    private String endDateString;
     private Category category;
     private int currentDaysCount;
     private int completedDaysCount;
+    private boolean completed;
 
     public Habit() {
         currentDaysCount = 0;
         completedDaysCount = 0;
     }
 
-    public Habit(String name, String description, String startDate, String endDate, Category category) {
+    public Habit(String name, String description, Calendar startDate, Calendar endDate, Category category) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;
@@ -49,8 +54,6 @@ public class Habit implements Parcelable , Comparable<Habit>{
     protected Habit(Parcel in) {
         name = in.readString();
         description = in.readString();
-        startDate = in.readString();
-        endDate = in.readString();
         currentDaysCount = in.readInt();
         completedDaysCount = in.readInt();
     }
@@ -83,20 +86,36 @@ public class Habit implements Parcelable , Comparable<Habit>{
         this.description = description;
     }
 
-    public String getStartDate() {
+    public Calendar getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public String getStartDateString(){
+        return startDateString;
+    }
+
+    public void setStartDate(Calendar startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public void setStartDateString(String startDateString){
+        this.startDateString = startDateString;
+    }
+
+    public Calendar getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public String getEndDateString(){
+        return endDateString;
+    }
+
+    public void setEndDate(Calendar endDate) {
         this.endDate = endDate;
+    }
+
+    public void setEndDateString(String endDateString){
+        this.endDateString = endDateString;
     }
 
     public Category getCategory() {
@@ -157,8 +176,6 @@ public class Habit implements Parcelable , Comparable<Habit>{
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
         parcel.writeString(description);
-        parcel.writeString(startDate);
-        parcel.writeString(endDate);
         parcel.writeInt(currentDaysCount);
         parcel.writeInt(completedDaysCount);
     }
@@ -166,5 +183,9 @@ public class Habit implements Parcelable , Comparable<Habit>{
     @Override
     public int compareTo(Habit habit) {
         return this.getName().compareToIgnoreCase(habit.getName());
+    }
+
+    public boolean hasTask(CalendarObject calendarObject) {
+        return calendarObject.getCalendar().after(startDate);
     }
 }

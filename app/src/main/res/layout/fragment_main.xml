@@ -25,7 +25,8 @@
         app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/calendarList"
-        tools:listitem="@layout/item_task" />
+        tools:listitem="@layout/item_task"
+        android:layoutAnimation="@anim/list_animation"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineStart"

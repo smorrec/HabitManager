@@ -30,7 +30,7 @@ public class HabitManagerViewModel extends ViewModel {
 
     public boolean validateHabitStartDate(Habit habit){
         boolean valido = false;
-        if(TextUtils.isEmpty(habit.getStartDate())){
+        if(TextUtils.isEmpty(habit.getStartDateString())){
             resultMutableLiveData.setValue(HabitManagerResult.STARTDATEEMPTY);
         }else {
             valido = true;

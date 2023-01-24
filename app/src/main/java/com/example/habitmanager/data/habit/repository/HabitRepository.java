@@ -5,6 +5,7 @@ import com.example.habitmanager.data.category.repository.CategoryRepository;
 import com.example.habitmanager.data.habit.model.Habit;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class HabitRepository {
     private ArrayList<Habit> list;
@@ -29,22 +30,22 @@ public class HabitRepository {
     private void initialize(){
         list = new ArrayList<>();
         ArrayList<Category> categories = CategoryRepository.getInstance().getList();
-        list.add(new Habit("Habit1", "Habit number 1", "20/11/2022", "", categories.get(0)));
-        list.add(new Habit("Habit2", "Habit number 2", "20/11/2022", "", categories.get(1)));
-        list.add(new Habit("Habit3", "Habit number 3", "20/11/2022", "", categories.get(2)));
-        list.add(new Habit("Habit4", "Habit number 4", "20/11/2022", "", categories.get(2)));
-        list.add(new Habit("Habit5", "Habit number 5", "20/11/2022", "", categories.get(1)));
-        list.add(new Habit("Habit6", "Habit number 6", "20/11/2022", "", categories.get(0)));
-        list.add(new Habit("Habit7", "Habit number 7", "20/11/2022", "", categories.get(0)));
-        list.add(new Habit("Habit8", "Habit number 8", "20/11/2022", "", categories.get(1)));
-        list.add(new Habit("Habit9", "Habit number 9", "20/11/2022", "", categories.get(2)));
-        list.add(new Habit("Habit10", "Habit number 10", "20/11/2022", "", categories.get(2)));
-        list.add(new Habit("Habit11", "Habit number 11", "20/11/2022", "", categories.get(1)));
-        list.add(new Habit("Habit12", "Habit number 12", "20/11/2022", "", categories.get(0)));
-        list.add(new Habit("Habit13", "Habit number 13", "20/11/2022", "", categories.get(0)));
-        list.add(new Habit("Habit14", "Habit number 14", "20/11/2022", "", categories.get(1)));
-        list.add(new Habit("Habit15", "Habit number 15", "20/11/2022", "", categories.get(2)));
-        list.add(new Habit("Habit16", "Habit number 16", "20/11/2022", "", categories.get(2)));
+        list.add(new Habit("Habit1", "Habit number 1", Calendar.getInstance(), null, categories.get(0)));
+        list.add(new Habit("Habit2", "Habit number 2", Calendar.getInstance(), null, categories.get(1)));
+        list.add(new Habit("Habit3", "Habit number 3", Calendar.getInstance(), null, categories.get(2)));
+        list.add(new Habit("Habit4", "Habit number 4", Calendar.getInstance(), null, categories.get(2)));
+        list.add(new Habit("Habit5", "Habit number 5", Calendar.getInstance(), null, categories.get(1)));
+        list.add(new Habit("Habit6", "Habit number 6", Calendar.getInstance(), null, categories.get(0)));
+        list.add(new Habit("Habit7", "Habit number 7", Calendar.getInstance(), null, categories.get(0)));
+        list.add(new Habit("Habit8", "Habit number 8", Calendar.getInstance(), null, categories.get(1)));
+        list.add(new Habit("Habit9", "Habit number 9", Calendar.getInstance(), null, categories.get(2)));
+        list.add(new Habit("Habit10", "Habit number 10", Calendar.getInstance(), null, categories.get(2)));
+        list.add(new Habit("Habit11", "Habit number 11", Calendar.getInstance(), null, categories.get(1)));
+        list.add(new Habit("Habit12", "Habit number 12", Calendar.getInstance(), null, categories.get(0)));
+        list.add(new Habit("Habit13", "Habit number 13", Calendar.getInstance(), null, categories.get(0)));
+        list.add(new Habit("Habit14", "Habit number 14", Calendar.getInstance(), null, categories.get(1)));
+        list.add(new Habit("Habit15", "Habit number 15", Calendar.getInstance(), null, categories.get(2)));
+        list.add(new Habit("Habit16", "Habit number 16", Calendar.getInstance(), null, categories.get(2)));
 
         list.get(0).setCompletedDaysCount(5);
         list.get(0).setCurrentDaysCount(7);

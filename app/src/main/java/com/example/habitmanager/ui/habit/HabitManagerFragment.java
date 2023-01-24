@@ -34,8 +34,12 @@ import com.example.habitmanager.data.category.repository.CategoryRepository;
 import com.example.habitmanager.databinding.FragmentAddEditHabitBinding;
 import com.example.habitmanager.preferencies.NotificationPreferencies;
 import com.example.habitmanager.ui.base.BaseFragment;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Calendar;
 
 public class HabitManagerFragment extends BaseFragment {
     private FragmentAddEditHabitBinding binding;
@@ -78,6 +82,24 @@ public class HabitManagerFragment extends BaseFragment {
             showEdit();
         }
         initViewModel();
+    }
+
+    public void showDatePickerDialog(TextInputEditText editText) {
+        CalendarConstraints.Builder builder =  new CalendarConstraints.Builder();
+        MaterialDatePicker<Long> picker = MaterialDatePicker.Builder.datePicker().setCalendarConstraints(builder.setValidator(DateValidatorPointForward.now()).build()).build();
+        picker.addOnPositiveButtonClickListener(selection -> {
+            editText.setText(picker.getHeaderText());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(selection);
+            switch (editText.getId()){
+                case R.id.txtStartDatePicker:
+                    binding.getHabit().setStartDate(calendar);
+                    break;
+                case R.id.txtEndDatePicker:
+                    binding.getHabit().setEndDate(calendar);
+            }
+        });
+        picker.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
 
     private void initViewModel() {

@@ -13,14 +13,34 @@ import com.example.habitmanager.data.task.repository.HabitTaskRepository;
 import com.example.habitmanager.databinding.ItemTaskBinding;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
     private ArrayList<HabitTask> list;
+    private ArrayList<HabitTask> listToShow;
     private CalendarObject selectedCalendar;
 
     public TasksAdapter() {
         this.list = HabitTaskRepository.getInstance().getList();
+        this.listToShow = new ArrayList<>();
+        this.selectedCalendar = new CalendarObject(Calendar.getInstance());
+        fillList();
     }
+    public void setSelectedCalendar(CalendarObject calendar){
+        selectedCalendar = calendar;
+        listToShow.clear();
+        fillList();
+        notifyDataSetChanged();
+    }
+
+    private void fillList(){
+        for (HabitTask habitTask : list){
+            if(habitTask.getCalendar().equals(selectedCalendar)){
+                listToShow.add(habitTask);
+            }
+        }
+    }
+
 
     @NonNull
     @Override
@@ -32,16 +52,18 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull TasksAdapter.ViewHolder holder, int position) {
+        holder.binding.avatarImageView2.setImageResource(listToShow.get(position).getHabit().getCategory().getPicture());
+        holder.binding.textView.setText(listToShow.get(position).getHabit().getName());
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return listToShow.size();
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ItemTaskBinding binding;
+        private ItemTaskBinding binding;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

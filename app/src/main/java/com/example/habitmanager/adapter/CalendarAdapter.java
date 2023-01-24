@@ -27,6 +27,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         this.listener = listener;
     }
 
+    public CalendarObject getItem(int position){
+        return list.get(position);
+    }
+
     @NonNull
     @Override
     public CalendarAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -69,14 +73,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-            if(view.isSelected()){
-                view.setSelected(false);
-                selectedPosition = -1;
-
-            }else{
+            if(!view.isSelected()) {
                 view.setSelected(true);
-                selectedPosition = getLayoutPosition();
             }
+            selectedPosition = getLayoutPosition();
             listener.onClick(view, getLayoutPosition());
             notifyDataSetChanged();
 

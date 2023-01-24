@@ -73,7 +73,7 @@
                 android:focusable="false"
                 android:hint="@string/DatePicker"
                 android:inputType="date"
-                android:text="@={habit.startDate}" />
+                android:text="@={habit.startDateString}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,7 +94,7 @@
                 android:focusable="false"
                 android:hint="@string/EndDatePicker"
                 android:inputType="date"
-                android:text="@={habit.endDate}" />
+                android:text="@={habit.endDateString}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

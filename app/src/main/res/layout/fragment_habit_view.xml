@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="date"
-                android:text="@{habit.startDate}"
+                android:text="@{habit.startDateString}"
                 android:layout_gravity="center"/>
 
         </androidx.cardview.widget.CardView>
@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="date"
-                android:text="@{habit.endDate}"
+                android:text="@{habit.endDateString}"
                 android:layout_gravity="center" />
 
         </androidx.cardview.widget.CardView>
