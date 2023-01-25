@@ -34,7 +34,7 @@ public class CalendarRepository {
         Date curDate = new Date();
         calendar.setTime(curDate);
         list.add(new CalendarObject(calendar));
-        for(int i = 0; i < 69; i++){
+        for(int i = 0; i < 59; i++){
             calendar.add(Calendar.DATE, 1);
             list.add(new CalendarObject(calendar));
         }

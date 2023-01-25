@@ -24,6 +24,7 @@ import com.example.habitmanager.adapter.CalendarAdapter;
 import com.example.habitmanager.adapter.HabitAdapter;
 import com.example.habitmanager.adapter.TasksAdapter;
 import com.example.habitmanager.data.calendar.model.CalendarObject;
+import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.databinding.FragmentMainBinding;
 import com.example.habitmanager.ui.base.BaseFragment;
 import com.example.habitmanager.viewmodel.StateDataList;
@@ -124,6 +125,18 @@ public class MainFragment extends BaseFragment implements CalendarAdapter.OnItem
                     arrayListStateDataList.setCompleted();
             }
         });
+
+        viewModel.getMutableLiveData().observe(getViewLifecycleOwner(), arrayListStateDataList -> {
+            switch (arrayListStateDataList.getState()){
+                case NODATA:
+                    arrayListStateDataList.setCompleted();
+                    break;
+                case SUCCESS:
+                    
+                    arrayListStateDataList.setCompleted();
+            }
+        });
+        viewModel.getDataList();
     }
 
     @Override

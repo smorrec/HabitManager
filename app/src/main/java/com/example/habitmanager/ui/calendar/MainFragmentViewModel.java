@@ -1,4 +1,5 @@
 package com.example.habitmanager.ui.calendar;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.habitmanager.data.calendar.model.CalendarObject;
@@ -11,26 +12,26 @@ import com.example.habitmanager.viewmodel.StateLiveDataList;
 import java.util.ArrayList;
 
 public class MainFragmentViewModel extends ViewModel {
-    private StateLiveDataList<ArrayList<CalendarObject>> stateLiveDataList = new StateLiveDataList<>();
+    private StateLiveDataList<ArrayList<CalendarObject>> stateLiveDataListCalendar = new StateLiveDataList<>();
+    private StateLiveDataList<ArrayList<Habit>> stateLiveDataListHabit = new StateLiveDataList<>();
 
     public void getDataList(){
-        stateLiveDataList.setLoading();
-
-        ArrayList<CalendarObject> list = CalendarRepository.getInstance().getList();
-
-        if(list.isEmpty()){
-            stateLiveDataList.setNoData();
+        ArrayList<Habit> habitList = HabitRepository.getInstance().getList();
+        if (habitList == null){
+            stateLiveDataListHabit.setNoData();
         }else {
-            generateHabitTasks(list);
-            stateLiveDataList.setSuccess(list);
+            stateLiveDataListHabit.setSuccess(habitList);
         }
+
+        ArrayList<CalendarObject> calendarList = CalendarRepository.getInstance().getList();
+        generateHabitTasks(calendarList);
+        stateLiveDataListCalendar.setSuccess(calendarList);
+
     }
 
     private void generateHabitTasks(ArrayList<CalendarObject> list){
-        ArrayList<Habit> habits = HabitRepository.getInstance().getList();
-
         for(CalendarObject calendarObject : list){
-            for (Habit habit: habits){
+            for (Habit habit: stateLiveDataListHabit.getValue().getData()){
                 if (habit.hasTask(calendarObject)) {
                     calendarObject.addHabitTask(new HabitTask(habit, calendarObject));
                 }
@@ -39,6 +40,10 @@ public class MainFragmentViewModel extends ViewModel {
     }
 
     public StateLiveDataList<ArrayList<CalendarObject>> getStateLiveDataList() {
-        return stateLiveDataList;
+        return stateLiveDataListCalendar;
+    }
+
+    public StateLiveDataList<ArrayList<Habit>> getMutableLiveData() {
+        return stateLiveDataListHabit;
     }
 }

@@ -29,7 +29,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     public void updateData(ArrayList<CalendarObject> data){
         list.clear();
         list.addAll(data);
-        selectedPosition = -1;
         notifyDataSetChanged();
     }
 
