@@ -1,4 +1,4 @@
-package com.example.habitmanager.ui;
+package com.example.habitmanager.ui.calendar;
 
 import android.content.res.Resources;
 import android.os.Build;
@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,11 +23,14 @@ import com.example.habitmanager.R;
 import com.example.habitmanager.adapter.CalendarAdapter;
 import com.example.habitmanager.adapter.HabitAdapter;
 import com.example.habitmanager.adapter.TasksAdapter;
+import com.example.habitmanager.data.calendar.model.CalendarObject;
 import com.example.habitmanager.databinding.FragmentMainBinding;
 import com.example.habitmanager.ui.base.BaseFragment;
+import com.example.habitmanager.viewmodel.StateDataList;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainFragment extends BaseFragment implements CalendarAdapter.OnItemClickListener{
@@ -33,6 +38,7 @@ public class MainFragment extends BaseFragment implements CalendarAdapter.OnItem
     private CalendarAdapter calendarAdapter;
     private TasksAdapter tasksAdapter;
     private LinearLayoutManager linearLayoutManager;
+    private MainFragmentViewModel viewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +51,7 @@ public class MainFragment extends BaseFragment implements CalendarAdapter.OnItem
         binding = FragmentMainBinding.inflate(inflater);
         initRvCalendar();
         initRvTasks();
+        initViewModel();
         getActivity().findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
         return binding.getRoot();
 
@@ -103,6 +110,20 @@ public class MainFragment extends BaseFragment implements CalendarAdapter.OnItem
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         binding.taskList.setLayoutManager(linearLayoutManager);
         binding.taskList.setAdapter(tasksAdapter);
+    }
+
+    private void initViewModel(){
+        viewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
+        viewModel.getStateLiveDataList().observe(getViewLifecycleOwner(), arrayListStateDataList -> {
+            switch (arrayListStateDataList.getState()){
+                case NODATA:
+                    arrayListStateDataList.setCompleted();
+                    break;
+                case SUCCESS:
+                    calendarAdapter.updateData(arrayListStateDataList.getData());
+                    arrayListStateDataList.setCompleted();
+            }
+        });
     }
 
     @Override

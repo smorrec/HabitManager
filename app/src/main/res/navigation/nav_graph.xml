@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/MainFragment"
-        android:name="com.example.habitmanager.ui.MainFragment"
+        android:name="com.example.habitmanager.ui.calendar.MainFragment"
         android:label="@string/main_fragment_label"
         tools:layout="@layout/fragment_main">
     </fragment>

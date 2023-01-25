@@ -3,8 +3,10 @@ package com.example.habitmanager.data.calendar.model;
 import android.content.res.Resources;
 
 import com.example.habitmanager.R;
+import com.example.habitmanager.data.task.model.HabitTask;
 import com.example.habitmanager.ui.HabitManagerApplication;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -13,11 +15,13 @@ public class CalendarObject {
     private int day;
     private String weekDay;
     private String month;
+    private ArrayList<HabitTask> habitTasks;
 
     public CalendarObject(int day, String weekDay, String month) {
         this.day = day;
         this.weekDay = weekDay;
         this.month = month;
+        habitTasks = new ArrayList<>();
     }
 
     public CalendarObject(Calendar calendar) {
@@ -25,6 +29,7 @@ public class CalendarObject {
         this.day = calendar.get(Calendar.DATE);
         this.weekDay = getWeekDayName();
         this.month = getMonthName();
+        habitTasks = new ArrayList<>();
     }
 
     public Calendar getCalendar(){
@@ -127,6 +132,18 @@ public class CalendarObject {
                 break;
         }
         return month;
+    }
+
+    public ArrayList<HabitTask> getHabitTasks(){
+        return habitTasks;
+    }
+
+    public void setHabitTasks(ArrayList<HabitTask> habitTasks){
+        this.habitTasks = habitTasks;
+    }
+
+    public void addHabitTask(HabitTask habitTask){
+        habitTasks.add(habitTask);
     }
 
     @Override

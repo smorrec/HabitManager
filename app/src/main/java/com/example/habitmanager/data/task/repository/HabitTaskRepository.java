@@ -33,16 +33,5 @@ public class HabitTaskRepository {
     }
 
     private void generateHabitTasks(){
-        ArrayList<CalendarObject> calendarObjects = CalendarRepository.getInstance().getList();
-        ArrayList<Habit> habits = HabitRepository.getInstance().getList();
-
-        for(CalendarObject calendarObject : calendarObjects){
-            for (Habit habit: habits){
-                if (habit.hasTask(calendarObject)) {
-                    list.add(new HabitTask(habit, calendarObject));
-                }
-            }
-        }
-
     }
 }
