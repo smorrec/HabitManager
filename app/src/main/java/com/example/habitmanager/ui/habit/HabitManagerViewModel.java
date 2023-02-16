@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.habitmanager.data.category.model.Category;
 import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.data.habit.repository.HabitRepository;
+import com.example.habitmanager.data.task.repository.HabitTaskRepository;
 
 public class HabitManagerViewModel extends ViewModel {
     private MutableLiveData<HabitManagerResult> resultMutableLiveData = new MutableLiveData<>();
@@ -43,6 +44,7 @@ public class HabitManagerViewModel extends ViewModel {
         if(validateHabitName(habit) && validateHabitStartDate(habit)){
             if(HabitRepository.getInstance().addHabit(habit, category)){
                 resultMutableLiveData.setValue(HabitManagerResult.SUCCESS);
+                HabitTaskRepository.getInstance().addTask(habit);
             }else {
                 resultMutableLiveData.setValue(HabitManagerResult.FAILURE);
             }

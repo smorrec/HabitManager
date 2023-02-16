@@ -1,6 +1,7 @@
 package com.example.habitmanager.data.calendar.repository;
 
 import android.content.res.Resources;
+import android.util.Log;
 
 import com.example.habitmanager.R;
 import com.example.habitmanager.data.calendar.model.CalendarObject;
@@ -33,10 +34,15 @@ public class CalendarRepository {
         Calendar calendar = Calendar.getInstance();
         Date curDate = new Date();
         calendar.setTime(curDate);
-        list.add(new CalendarObject(calendar));
-        for(int i = 0; i < 69; i++){
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(calendar.getTimeInMillis());
+        list.add(new CalendarObject(c));
+        for(int i = 0; i < 59; i++){
             calendar.add(Calendar.DATE, 1);
-            list.add(new CalendarObject(calendar));
+            c = Calendar.getInstance();
+            c.setTimeInMillis(calendar.getTimeInMillis());
+            Log.d("Calendar", c.toString());
+            list.add(new CalendarObject(c));
         }
     }
 

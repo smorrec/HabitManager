@@ -120,6 +120,7 @@ public class HabitListFragment extends Fragment implements HabitAdapter.OnItemCl
                     adapter.updateData(arrayListStateDataList.getData());
                     sortList();
                     arrayListStateDataList.setCompleted();
+                    Log.d("kwdhf", "Called");
                     break;
                 case COMPLETED:
                     break;

@@ -1,5 +1,6 @@
 package com.example.habitmanager.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,11 @@ import java.util.Calendar;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
     private ArrayList<HabitTask> list;
-    private ArrayList<HabitTask> listToShow;
+    private ArrayList<HabitTask> listToShow = new ArrayList<>();
     private CalendarObject selectedCalendar;
 
     public TasksAdapter() {
         this.list = HabitTaskRepository.getInstance().getList();
-        this.listToShow = new ArrayList<>();
         this.selectedCalendar = new CalendarObject(Calendar.getInstance());
         fillList();
     }
@@ -39,15 +39,14 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
                 listToShow.add(habitTask);
             }
         }
+        Log.d("Adapter", listToShow.size() + ", " + list.size());
     }
-
 
     @NonNull
     @Override
     public TasksAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemTaskBinding binding = ItemTaskBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        TasksAdapter.ViewHolder viewHolder = new TasksAdapter.ViewHolder(binding.getRoot());
-        return viewHolder;
+        return new ViewHolder(binding.getRoot());
     }
 
     @Override
@@ -62,8 +61,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private ItemTaskBinding binding;
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+        private final ItemTaskBinding binding;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

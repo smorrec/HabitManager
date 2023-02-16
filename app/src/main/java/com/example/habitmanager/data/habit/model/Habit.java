@@ -2,6 +2,7 @@ package com.example.habitmanager.data.habit.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.example.habitmanager.data.calendar.model.CalendarObject;
 import com.example.habitmanager.data.category.model.Category;
@@ -186,6 +187,9 @@ public class Habit implements Parcelable , Comparable<Habit>{
     }
 
     public boolean hasTask(CalendarObject calendarObject) {
-        return calendarObject.getCalendar().after(startDate);
+        Log.d("startDate", String.valueOf(startDate.getTimeInMillis()));
+        Log.d("calendarObject", String.valueOf(calendarObject.getCalendar().getTimeInMillis()));
+        Log.d("has task", String.valueOf(startDate.getTimeInMillis() <= calendarObject.getCalendar().getTimeInMillis()));
+        return startDate.getTimeInMillis() <= calendarObject.getCalendar().getTimeInMillis();
     }
 }
