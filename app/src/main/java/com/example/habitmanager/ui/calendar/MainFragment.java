@@ -1,4 +1,4 @@
-package com.example.habitmanager.ui;
+package com.example.habitmanager.ui.calendar;
 
 import android.content.res.Resources;
 import android.os.Build;

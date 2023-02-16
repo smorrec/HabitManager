@@ -3,6 +3,7 @@ package com.example.habitmanager.data.calendar.model;
 import android.content.res.Resources;
 
 import com.example.habitmanager.R;
+import com.example.habitmanager.data.task.model.HabitTask;
 import com.example.habitmanager.ui.HabitManagerApplication;
 
 import java.util.Calendar;

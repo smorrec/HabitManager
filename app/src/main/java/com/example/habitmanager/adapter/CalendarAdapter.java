@@ -23,13 +23,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     private ArrayList<CalendarObject> list;
 
     public CalendarAdapter(CalendarAdapter.OnItemClickListener listener) {
-        this.list = new ArrayList<>();
+        this.list = CalendarRepository.getInstance().getList();
         this.listener = listener;
-    }
-    public void updateData(ArrayList<CalendarObject> data){
-        list.clear();
-        list.addAll(data);
-        notifyDataSetChanged();
     }
 
     public CalendarObject getItem(int position){
