@@ -6,10 +6,9 @@ import com.example.habitmanager.R;
 import com.example.habitmanager.ui.HabitManagerApplication;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
-public class CalendarObject implements Comparable{
+public class CalendarObject {
     private Calendar calendar;
     private int day;
     private String weekDay;
@@ -24,8 +23,8 @@ public class CalendarObject implements Comparable{
     public CalendarObject(Calendar calendar) {
         this.calendar = calendar;
         this.day = calendar.get(Calendar.DATE);
-        setWeekDayName();
-        setMonthName();
+        this.weekDay = getWeekDayName();
+        this.month = getMonthName();
     }
 
     public Calendar getCalendar(){
@@ -60,7 +59,8 @@ public class CalendarObject implements Comparable{
         this.month = month;
     }
 
-    private void setWeekDayName(){
+    private String getWeekDayName(){
+        String weekDay = "";
         switch (calendar.get(Calendar.DAY_OF_WEEK)){
             case 1 :
                 weekDay = HabitManagerApplication.getContext().getResources().getString(R.string.sunday);
@@ -83,10 +83,11 @@ public class CalendarObject implements Comparable{
             case 7 :
                 weekDay = HabitManagerApplication.getContext().getResources().getString(R.string.saturday);
         }
-
+        return weekDay;
     }
 
-    private void setMonthName(){
+    private String getMonthName(){
+        String month = "";
         switch (calendar.get(Calendar.MONTH)){
             case 0 :
                 month = HabitManagerApplication.getContext().getResources().getString(R.string.january);
@@ -125,6 +126,7 @@ public class CalendarObject implements Comparable{
                 month = HabitManagerApplication.getContext().getResources().getString(R.string.december);
                 break;
         }
+        return month;
     }
 
     @Override
@@ -140,8 +142,6 @@ public class CalendarObject implements Comparable{
         return Objects.hash(calendar);
     }
 
-
-
     @Override
     public String toString() {
         return "CalendarObject{" +
@@ -149,10 +149,5 @@ public class CalendarObject implements Comparable{
                 ", weekDay='" + weekDay + '\'' +
                 ", month='" + month + '\'' +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        return Long.compare(calendar.getTimeInMillis(), ((CalendarObject)o).getCalendar().getTimeInMillis());
     }
 }

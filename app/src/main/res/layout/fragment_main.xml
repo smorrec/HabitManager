@@ -5,7 +5,7 @@
     android:id="@+id/MainFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainFragment">
+    tools:context=".ui.calendar.MainFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarList"
