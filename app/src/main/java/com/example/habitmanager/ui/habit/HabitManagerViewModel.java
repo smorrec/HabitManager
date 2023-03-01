@@ -40,7 +40,7 @@ public class HabitManagerViewModel extends ViewModel {
         return valido;
     }
 
-    public void addHabit(Habit habit, Category category){
+    public void addHabit(Habit habit, int category){
         if(validateHabitName(habit) && validateHabitStartDate(habit)){
             if(HabitRepository.getInstance().addHabit(habit, category)){
                 resultMutableLiveData.setValue(HabitManagerResult.SUCCESS);
@@ -51,9 +51,9 @@ public class HabitManagerViewModel extends ViewModel {
         }
     }
 
-    public void editHabit(Habit habit, Habit editedHabit, Category category){
+    public void editHabit(Habit habit, int category){
         if(validateHabitName(habit) && validateHabitStartDate(habit)) {
-            if (HabitRepository.getInstance().editHabit(habit, editedHabit, category)) {
+            if (HabitRepository.getInstance().editHabit(habit, category)) {
                 resultMutableLiveData.setValue(HabitManagerResult.SUCCESS);
             } else {
                 resultMutableLiveData.setValue(HabitManagerResult.FAILURE);

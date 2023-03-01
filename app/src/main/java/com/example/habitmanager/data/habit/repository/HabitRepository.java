@@ -1,19 +1,20 @@
 package com.example.habitmanager.data.habit.repository;
 
 import com.example.habitmanager.data.category.model.Category;
-import com.example.habitmanager.data.category.repository.CategoryRepository;
+import com.example.habitmanager.data.habit.dao.HabitDao;
 import com.example.habitmanager.data.habit.model.Habit;
+import com.example.habitmanager.database.Database;
+import com.example.habitmanager.ui.HabitManagerApplication;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 public class HabitRepository {
-    private ArrayList<Habit> list;
+    private HabitDao habitDao;
     private static HabitRepository instance;
-    private int deletedPosition = -1;
 
     private HabitRepository(){
-        initialize();
+        habitDao = Database.getINSTANCE().habitDao();
     }
 
     public static HabitRepository getInstance(){
@@ -24,65 +25,50 @@ public class HabitRepository {
     }
 
     public ArrayList<Habit> getList(){
-        return list;
-    }
-
-    private void initialize(){
-        list = new ArrayList<>();
-        ArrayList<Category> categories = CategoryRepository.getInstance().getList();
-        list.add(new Habit("Habit1", "Habit number 1", Calendar.getInstance(), null, categories.get(0)));
-        list.add(new Habit("Habit2", "Habit number 2", Calendar.getInstance(), null, categories.get(1)));
-        list.add(new Habit("Habit3", "Habit number 3", Calendar.getInstance(), null, categories.get(2)));
-        list.add(new Habit("Habit4", "Habit number 4", Calendar.getInstance(), null, categories.get(2)));
-        list.add(new Habit("Habit5", "Habit number 5", Calendar.getInstance(), null, categories.get(1)));
-        list.add(new Habit("Habit6", "Habit number 6", Calendar.getInstance(), null, categories.get(0)));
-        list.add(new Habit("Habit7", "Habit number 7", Calendar.getInstance(), null, categories.get(0)));
-        list.add(new Habit("Habit8", "Habit number 8", Calendar.getInstance(), null, categories.get(1)));
-        list.add(new Habit("Habit9", "Habit number 9", Calendar.getInstance(), null, categories.get(2)));
-        list.add(new Habit("Habit10", "Habit number 10", Calendar.getInstance(), null, categories.get(2)));
-        list.add(new Habit("Habit11", "Habit number 11", Calendar.getInstance(), null, categories.get(1)));
-        list.add(new Habit("Habit12", "Habit number 12", Calendar.getInstance(), null, categories.get(0)));
-        list.add(new Habit("Habit13", "Habit number 13", Calendar.getInstance(), null, categories.get(0)));
-        list.add(new Habit("Habit14", "Habit number 14", Calendar.getInstance(), null, categories.get(1)));
-        list.add(new Habit("Habit15", "Habit number 15", Calendar.getInstance(), null, categories.get(2)));
-        list.add(new Habit("Habit16", "Habit number 16", Calendar.getInstance(), null, categories.get(2)));
-
-        list.get(0).setCompletedDaysCount(5);
-        list.get(0).setCurrentDaysCount(7);
-
-
-    }
-
-    public boolean addHabit(Habit habit, Category category) {
-        boolean succes = false;
-        habit.setCategory(category);
-        if(!list.contains(habit)){
-            list.add(habit);
-            succes = true;
+        try {
+            return HabitManagerApplication.getExecutor().submit(() ->
+                    (ArrayList<Habit>) habitDao.selectAll()).get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        return succes;
     }
 
-    public boolean editHabit(Habit habit, Habit editedHabit, Category category) {
-        boolean success = false;
-        habit.setCategory(category);
-        int index = list.indexOf(editedHabit);
-        list.remove(editedHabit);
-        if(list.contains(habit)){
-            list.add(index, editedHabit);
-        }else {
-            list.add(index, habit);
-            success = true;
+    public boolean addHabit(Habit habit, int category) {
+        try {
+            habit.setCategoryId(category);
+            return HabitManagerApplication.getExecutor().submit(() ->
+                    habitDao.insert(habit)).get() > 0;
+        } catch (ExecutionException | InterruptedException e) {
+            return false;
         }
-        return success;
+    }
+
+    public boolean editHabit(Habit habit, int category) {
+
+        try {
+            habit.setCategoryId(category);
+            return HabitManagerApplication.getExecutor().submit(() ->
+                    habitDao.update(habit)).get() > 0;
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void deleteHabit(Habit habit){
-        deletedPosition = list.indexOf(habit);
-        list.remove(habit);
+        HabitManagerApplication.getExecutor().submit(() ->
+                habitDao.delete(habit));
     }
 
     public void undo(Habit habit) {
-        list.add(deletedPosition, habit);
+        HabitManagerApplication.getExecutor().submit(() ->
+                habitDao.insert(habit));
+    }
+
+    public Habit selectByName(String name){
+        try {
+            return HabitManagerApplication.getExecutor().submit(() -> habitDao.selectByName(name)).get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

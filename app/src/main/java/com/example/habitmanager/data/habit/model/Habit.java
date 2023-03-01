@@ -4,36 +4,53 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.example.habitmanager.data.calendar.model.CalendarObject;
 import com.example.habitmanager.data.category.model.Category;
 
 import java.util.Calendar;
 import java.util.Objects;
-
+@Entity(foreignKeys = @ForeignKey(entity = Category.class, parentColumns = "id",
+        childColumns = "category_id", onDelete = 5))
 public class Habit implements Parcelable , Comparable<Habit>{
-    public static final String KEY = "habit";
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "habitName")
     private String name;
     private String description;
+    @NonNull
     private Calendar startDate;
     private String startDateString;
     private Calendar endDate;
     private String endDateString;
-    private Category category;
+
+    @ColumnInfo(name = "category_id")
+    private int categoryId;
     private int currentDaysCount;
     private int completedDaysCount;
-    private boolean completed;
+
+    private boolean finished;
+
+    public static final String KEY = "habit";
 
     public Habit() {
         currentDaysCount = 0;
         completedDaysCount = 0;
     }
 
-    public Habit(String name, String description, Calendar startDate, Calendar endDate, Category category) {
+    public Habit(String name, String description, Calendar startDate, Calendar endDate, int categoryId) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.category = category;
+        this.categoryId = categoryId;
         this.currentDaysCount = 0;
         this.completedDaysCount = 0;
     }
@@ -42,8 +59,10 @@ public class Habit implements Parcelable , Comparable<Habit>{
         this.name = habit.getName();
         this.description = habit.getDescription();
         this.startDate = habit.getStartDate();
+        this.startDateString = habit.getStartDateString();
         this.endDate = habit.getEndDate();
-        this.category = habit.getCategory();
+        this.endDateString = habit.getEndDateString();
+        this.categoryId = habit.getCategoryId();
         this.currentDaysCount = habit.getCurrentDaysCount();
         this.completedDaysCount = habit.getCompletedDaysCount();
     }
@@ -70,6 +89,14 @@ public class Habit implements Parcelable , Comparable<Habit>{
             return new Habit[size];
         }
     };
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public String getName() {
         return name;
@@ -119,14 +146,6 @@ public class Habit implements Parcelable , Comparable<Habit>{
         this.endDateString = endDateString;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public int getCurrentDaysCount() {
         return currentDaysCount;
     }
@@ -141,6 +160,14 @@ public class Habit implements Parcelable , Comparable<Habit>{
 
     public void setCompletedDaysCount(int completedDaysCount) {
         this.completedDaysCount = completedDaysCount;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     public void increaseCurrentDaysCount(){
@@ -165,7 +192,7 @@ public class Habit implements Parcelable , Comparable<Habit>{
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, startDate, endDate, category, currentDaysCount, completedDaysCount);
+        return Objects.hash(name, description, startDate, endDate, categoryId, currentDaysCount, completedDaysCount);
     }
 
     @Override

@@ -74,7 +74,7 @@ public class HabitManagerFragment extends BaseFragment {
         binding.txtStartDatePicker.setOnClickListener(startDatePicker -> showDatePickerDialog(binding.txtStartDatePicker));
         binding.txtEndDatePicker.setOnClickListener(endDatePicker -> showDatePickerDialog(binding.txtEndDatePicker));
         binding.fab.setOnClickListener(fab -> viewModel.addHabit(binding.getHabit(),
-                (Category) binding.CategorySpinner.getSelectedItem()));
+                ((Category) binding.CategorySpinner.getSelectedItem()).getId()));
         binding.txtHabitName.addTextChangedListener(new HabitTextWatcher(binding.txtHabitName));
         binding.txtStartDatePicker.addTextChangedListener(new HabitTextWatcher(binding.txtStartDatePicker));
 
@@ -172,9 +172,10 @@ public class HabitManagerFragment extends BaseFragment {
     private void showEdit(){
         Habit habit = getArguments().getParcelable(Habit.KEY);
         binding.setHabit(habit.clone());
-
-        binding.fab.setOnClickListener(view -> viewModel.editHabit(binding.getHabit(), habit,
-                (Category) binding.CategorySpinner.getSelectedItem()));
+        binding.txtHabitNameLayout.setEnabled(false);
+        binding.txtStartDateLayout.setEnabled(false);
+        binding.fab.setOnClickListener(view -> viewModel.editHabit(binding.getHabit(),
+                ((Category) binding.CategorySpinner.getSelectedItem()).getId()));
     }
 
     class HabitTextWatcher implements TextWatcher {

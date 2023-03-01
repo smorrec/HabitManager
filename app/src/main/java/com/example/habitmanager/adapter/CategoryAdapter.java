@@ -15,13 +15,14 @@ import com.example.habitmanager.R;
 import com.example.habitmanager.data.category.model.Category;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryAdapter extends ArrayAdapter<Category> {
-    private ArrayList<Category> list;
+    private final ArrayList<Category> list;
 
-    public CategoryAdapter(@NonNull Context context, int resource, ArrayList<Category> list) {
+    public CategoryAdapter(@NonNull Context context, int resource, List<Category> list) {
         super(context, resource, list);
-        this.list = list;
+        this.list = (ArrayList<Category>) list;
     }
 
     @NonNull
@@ -44,7 +45,7 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
 
     }
 
-    public class ViewHolder{
+    public static class ViewHolder{
         private TextView textView;
         private ImageView imageView;
     }

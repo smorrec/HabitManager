@@ -7,6 +7,6 @@ import java.util.Comparator;
 public class HabitComparatorByCategory implements Comparator<Habit> {
     @Override
     public int compare(Habit habit, Habit t1) {
-        return habit.getCategory().compareTo(t1.getCategory());
+        return Integer.compare(habit.getCategoryId(), t1.getCategoryId());
     }
 }

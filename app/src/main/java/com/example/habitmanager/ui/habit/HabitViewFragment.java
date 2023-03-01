@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.habitmanager.R;
+import com.example.habitmanager.data.category.repository.CategoryRepository;
 import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.databinding.FragmentHabitViewBinding;
 
@@ -28,8 +29,8 @@ public class HabitViewFragment extends Fragment {
         binding = FragmentHabitViewBinding.inflate(inflater);
         binding.setHabit(getArguments().getParcelable(Habit.KEY));
         binding.fab.setOnClickListener(view -> goBack());
-        binding.categoryImageView.setImageResource(binding.getHabit().getCategory().getPicture());
-        binding.categoryTextView.setText(binding.getHabit().getCategory().getName());
+        binding.categoryImageView.setImageResource(CategoryRepository.getInstance().getPicture(binding.getHabit().getCategoryId()));
+        binding.categoryTextView.setText(CategoryRepository.getInstance().getName(binding.getHabit().getCategoryId()));
         return binding.getRoot();
     }
 

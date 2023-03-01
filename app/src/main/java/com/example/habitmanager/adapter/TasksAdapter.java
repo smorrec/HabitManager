@@ -9,16 +9,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habitmanager.data.calendar.model.CalendarObject;
+import com.example.habitmanager.data.category.repository.CategoryRepository;
+import com.example.habitmanager.data.habit.repository.HabitRepository;
 import com.example.habitmanager.data.task.model.HabitTask;
 import com.example.habitmanager.data.task.repository.HabitTaskRepository;
 import com.example.habitmanager.databinding.ItemTaskBinding;
+import com.google.android.material.checkbox.MaterialCheckBox;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
-    private ArrayList<HabitTask> list;
-    private ArrayList<HabitTask> listToShow = new ArrayList<>();
+    private final ArrayList<HabitTask> list;
+    private final ArrayList<HabitTask> listToShow = new ArrayList<>();
     private CalendarObject selectedCalendar;
 
     public TasksAdapter() {
@@ -51,8 +54,14 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull TasksAdapter.ViewHolder holder, int position) {
-        holder.binding.avatarImageView2.setImageResource(listToShow.get(position).getHabit().getCategory().getPicture());
-        holder.binding.textView.setText(listToShow.get(position).getHabit().getName());
+        holder.task = listToShow.get(position);
+        holder.binding.avatarImageView2.setImageResource(
+                CategoryRepository.getInstance().getPicture(HabitRepository.getInstance().selectByName(listToShow.get(position).getHabitName()).getCategoryId()));
+        holder.binding.textView.setText(listToShow.get(position).getHabitName());
+        holder.binding.descriptionnBtn.setChecked(listToShow.get(position).isCompleted());
+        holder.binding.descriptionnBtn.setEnabled(listToShow.get(position).isCurrentDay());
+
+
     }
 
     @Override
@@ -63,10 +72,16 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private final ItemTaskBinding binding;
+        private HabitTask task;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             binding = ItemTaskBinding.bind(itemView);
+            binding.descriptionnBtn.addOnCheckedStateChangedListener((checkBox, state) -> {
+                task.setCompleted(checkBox.isChecked());
+                HabitTaskRepository.getInstance().update(task);
+            });
+
         }
 
     }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.data.habit.repository.HabitRepository;
+import com.example.habitmanager.data.task.model.HabitTask;
 import com.example.habitmanager.data.task.repository.HabitTaskRepository;
 import com.example.habitmanager.viewmodel.StateLiveDataList;
 
@@ -48,6 +49,7 @@ public class HabitListViewModel extends ViewModel {
 
     public void undo() {
         HabitRepository.getInstance().undo(deletedHabit.getValue());
+        HabitTaskRepository.getInstance().undo(deletedHabit.getValue());
     }
 
     public void setUndoEnabled(boolean b) {

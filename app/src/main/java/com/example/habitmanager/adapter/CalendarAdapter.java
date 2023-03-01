@@ -9,18 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habitmanager.data.calendar.model.CalendarObject;
 import com.example.habitmanager.data.calendar.repository.CalendarRepository;
-import com.example.habitmanager.data.habit.repository.HabitRepository;
-import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.databinding.CalendarItemBinding;
-import com.example.habitmanager.databinding.ItemHabitBinding;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder>{
     public int selectedPosition = -1;
-    private CalendarAdapter.OnItemClickListener listener;
-    private ArrayList<CalendarObject> list;
+    private final CalendarAdapter.OnItemClickListener listener;
+    private final ArrayList<CalendarObject> list;
 
     public CalendarAdapter(CalendarAdapter.OnItemClickListener listener) {
         this.list = CalendarRepository.getInstance().getList();
@@ -35,8 +32,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     @Override
     public CalendarAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         CalendarItemBinding binding = CalendarItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        CalendarAdapter.ViewHolder viewHolder = new CalendarAdapter.ViewHolder(binding.getRoot());
-        return viewHolder;
+        return new CalendarAdapter.ViewHolder(binding.getRoot());
     }
 
     @Override

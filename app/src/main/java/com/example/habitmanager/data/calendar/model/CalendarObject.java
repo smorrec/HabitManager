@@ -15,6 +15,10 @@ public class CalendarObject {
     private String weekDay;
     private String month;
 
+    public CalendarObject(){
+
+    }
+
     public CalendarObject(int day, String weekDay, String month) {
         this.day = day;
         this.weekDay = weekDay;
@@ -24,8 +28,8 @@ public class CalendarObject {
     public CalendarObject(Calendar calendar) {
         this.calendar = calendar;
         this.day = calendar.get(Calendar.DATE);
-        this.weekDay = getWeekDayName();
-        this.month = getMonthName();
+        setWeekDayName();
+        setMonthName();
     }
 
     public Calendar getCalendar(){
@@ -60,8 +64,7 @@ public class CalendarObject {
         this.month = month;
     }
 
-    private String getWeekDayName(){
-        String weekDay = "";
+    private void setWeekDayName(){
         switch (calendar.get(Calendar.DAY_OF_WEEK)){
             case 1 :
                 weekDay = HabitManagerApplication.getContext().getResources().getString(R.string.sunday);
@@ -84,11 +87,9 @@ public class CalendarObject {
             case 7 :
                 weekDay = HabitManagerApplication.getContext().getResources().getString(R.string.saturday);
         }
-        return weekDay;
     }
 
-    private String getMonthName(){
-        String month = "";
+    private void setMonthName(){
         switch (calendar.get(Calendar.MONTH)){
             case 0 :
                 month = HabitManagerApplication.getContext().getResources().getString(R.string.january);
@@ -127,7 +128,6 @@ public class CalendarObject {
                 month = HabitManagerApplication.getContext().getResources().getString(R.string.december);
                 break;
         }
-        return month;
     }
 
     @Override

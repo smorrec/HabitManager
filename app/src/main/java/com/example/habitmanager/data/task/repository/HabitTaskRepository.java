@@ -6,17 +6,21 @@ import com.example.habitmanager.data.calendar.model.CalendarObject;
 import com.example.habitmanager.data.calendar.repository.CalendarRepository;
 import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.data.habit.repository.HabitRepository;
+import com.example.habitmanager.data.task.dao.HabitTaskDao;
 import com.example.habitmanager.data.task.model.HabitTask;
+import com.example.habitmanager.database.Database;
+import com.example.habitmanager.ui.HabitManagerApplication;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 public class HabitTaskRepository {
-    private ArrayList<HabitTask> list;
+    private HabitTaskDao habitTaskDao;
     private static HabitTaskRepository instance;
 
     private HabitTaskRepository(){
-        inicialize();
+        habitTaskDao = Database.getINSTANCE().habitTaskDao();
     }
 
     public static HabitTaskRepository getInstance(){
@@ -27,42 +31,36 @@ public class HabitTaskRepository {
     }
 
     public ArrayList<HabitTask> getList(){
-        return list;
-    }
-
-    private void inicialize(){
-        list = new ArrayList<>();
-        generateHabitTasks();
-        Log.d("dashfb", String.valueOf(list.size()));
-    }
-
-    private void generateHabitTasks(){
-        ArrayList<CalendarObject> calendarObjects = CalendarRepository.getInstance().getList();
-        ArrayList<Habit> habits = HabitRepository.getInstance().getList();
-
-        for(CalendarObject calendarObject : calendarObjects){
-            for (Habit habit: habits){
-                if (habit.hasTask(calendarObject)) {
-                    list.add(new HabitTask(habit, calendarObject));
-                }
-            }
+        try {
+            return HabitManagerApplication.getExecutor().submit(() ->
+                    (ArrayList<HabitTask>) habitTaskDao.selectAll()).get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        Log.d("dshfb", "generatedTasks");
     }
 
     public void addTask(Habit habit) {
-        Calendar calendar = Calendar.getInstance();
-        Log.d("Esta mierda funciona¿", String.valueOf(habit.getStartDate().compareTo(calendar)));
         ArrayList<CalendarObject> calendarObjects = CalendarRepository.getInstance().getList();
         for(CalendarObject calendarObject : calendarObjects){
                if (habit.hasTask(calendarObject)) {
-                   Log.d("add task", habit.getName() + " " +  calendarObject.getCalendar() + " " + habit.getStartDate());
-                   list.add(new HabitTask(habit, calendarObject));
+                   HabitManagerApplication.getExecutor().submit(() ->
+                           habitTaskDao.insert(new HabitTask(habit, calendarObject)));
+
                }
         }
     }
 
     public void deleteTask(Habit habit) {
-        list.remove(new HabitTask(habit, new CalendarObject(Calendar.getInstance())));
+        HabitManagerApplication.getExecutor().submit(() ->
+                habitTaskDao.deleteWhereHabit(habit.getName()));
+    }
+
+    public void undo(Habit value) {
+        addTask(value);
+    }
+
+    public void update(HabitTask task) {
+        HabitManagerApplication.getExecutor().submit(() ->
+                habitTaskDao.update(task));
     }
 }

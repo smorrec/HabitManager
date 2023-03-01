@@ -1,10 +1,18 @@
 package com.example.habitmanager.data.category.model;
 
-import java.util.Objects;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+@Entity
 public class Category implements Comparable<Category>{
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
     private int id;
+    @NonNull
     private String name;
+    @NonNull
     private int picture;
 
     public Category(){

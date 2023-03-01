@@ -10,23 +10,32 @@ import android.os.Build;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.example.habitmanager.R;
+import com.example.habitmanager.data.category.repository.CategoryRepository;
+import com.example.habitmanager.database.Database;
 import com.example.habitmanager.preferencies.LanguagePreferencies;
 import com.example.habitmanager.preferencies.ThemePreferencies;
 
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HabitManagerApplication extends Application {
     public static final String CHANNEL_ID = "id";
     private static Context context;
+    private static ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
+        Database.getDatabase(this);
         createNotificationChannel();
         initTheme();
         initLanguage();
+        CategoryRepository.getInstance();
+    }
+    public static ExecutorService getExecutor(){
+        return executorService;
     }
 
     public static Context getContext(){

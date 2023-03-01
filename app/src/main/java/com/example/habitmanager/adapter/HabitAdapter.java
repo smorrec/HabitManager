@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habitmanager.R;
+import com.example.habitmanager.data.category.repository.CategoryRepository;
 import com.example.habitmanager.data.habit.comparator.HabitComparatorByCategory;
 import com.example.habitmanager.data.habit.model.Habit;
 import com.example.habitmanager.data.habit.repository.HabitRepository;
@@ -27,13 +28,14 @@ import com.example.habitmanager.databinding.ItemHabitBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
-    private ArrayList<Habit> list;
-    private OnItemClickListener listener;
+    private final ArrayList<Habit> list;
+    private final OnItemClickListener listener;
     public static int selectedPosition = -1;
     public static int deletedPosition = -1;
-    private ArrayList<Integer> positionDescriptionShowed;
+    private final ArrayList<Integer> positionDescriptionShowed;
 
     public HabitAdapter(OnItemClickListener listener) {
         this.list = new ArrayList<>();
@@ -66,14 +68,13 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
     @Override
     public HabitAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemHabitBinding binding = ItemHabitBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        ViewHolder viewHolder = new ViewHolder(binding.getRoot());
-        return viewHolder;
+        return new ViewHolder(binding.getRoot());
     }
 
     @Override
     public void onBindViewHolder(@NonNull HabitAdapter.ViewHolder holder, int position) {
         holder.binding.textView.setText(list.get(position).getName());
-        holder.binding.avatarImageView2.setImageResource(list.get(position).getCategory().getPicture());
+        holder.binding.avatarImageView2.setImageResource(CategoryRepository.getInstance().getPicture(list.get(position).getCategoryId()));
         holder.binding.descriptionCotent.setText(list.get(position).getDescription());
         holder.binding.getRoot().setSelected(position == selectedPosition);
 
@@ -95,6 +96,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
+                    // Este método no es necesario para la animación, pero de debe implementar
                 }
 
                 @Override
@@ -104,6 +106,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
 
                 @Override
                 public void onAnimationRepeat(Animation animation) {
+                    // Este método no es necesario para la animación, pero de debe implementar
                 }
             });
             holder.binding.description.startAnimation(animation);
@@ -120,7 +123,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-
+                    // Este método no es necesario para la animación, pero de debe implementar
                 }
 
                 @Override
@@ -130,7 +133,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
 
                 @Override
                 public void onAnimationRepeat(Animation animation) {
-
+                    // Este método no es necesario para la animación, pero de debe implementar
                 }
             });
             holder.binding.description.startAnimation(animation);
@@ -180,7 +183,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder>{
         void onItemClick(View view, int position);
     }
 
-    public void updateData(ArrayList<Habit> data){
+    public void updateData(List<Habit> data){
         list.clear();
         list.addAll(data);
         orderByName();
